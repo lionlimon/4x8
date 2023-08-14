@@ -1,0 +1,1 @@
+import{a as o}from"./runtime-7c856e81.js";o('<symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chevron-left"><path d="m8 19 7-7-7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></symbol>',"chevron-left");const r="chevron-left";export{r as default};

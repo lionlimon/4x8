@@ -1,0 +1,1 @@
+import{a as o}from"./runtime-7c856e81.js";o('<symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="cross"><path d="m19.425 4.575-14.85 14.85m-.002-14.85 14.85 14.849" stroke="currentcolor" stroke-width="1.5" stroke-linecap="round" /></symbol>',"cross");const r="cross";export{r as default};

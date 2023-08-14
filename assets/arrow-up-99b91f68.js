@@ -1,0 +1,1 @@
+import{a as o}from"./runtime-7c856e81.js";o('<symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="arrow-up"><path d="m16.75 10.25-4.5-5.5-4.5 5.5m4.5 9.5V4.92" stroke="#E2E4E9" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" /></symbol>',"arrow-up");const t="arrow-up";export{t as default};

@@ -1,0 +1,1 @@
+import{a as o}from"./runtime-7c856e81.js";o('<symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 2" id="minus"><path fill="currentcolor" d="M0 0h14v2H0z" /></symbol>',"minus");const l="minus";export{l as default};

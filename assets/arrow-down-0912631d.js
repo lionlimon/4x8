@@ -1,0 +1,1 @@
+import{a as o}from"./runtime-7c856e81.js";o('<symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 24" id="arrow-down"><path fill-rule="evenodd" clip-rule="evenodd" d="m7.75 10 5 5 5-5h-10Z" fill="currentcolor" /></symbol>',"arrow-down");const l="arrow-down";export{l as default};
