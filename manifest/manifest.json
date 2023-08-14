@@ -4,7 +4,7 @@
     "display": "standalone",
     "scope": "/",
     "description": "Приложение для записи прогресса тренировок",
-    "start_url": "/",
+    "start_url": "/4x8/",
     "name": "4x8",
     "short_name": "4x8",
     "icons": [
