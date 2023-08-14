@@ -1,0 +1,123 @@
+@import './imports';
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  margin: 0;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  font-family: var(--main-font);
+  font-size: 14px;
+  background-color: rgb(var(--background));
+  color: rgb(var(--text));
+  line-height: 1.2;
+  min-width: 360px;
+  overflow-x: hidden;
+  touch-action: pan-y;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  transition: background-color .15s;
+
+  @include outline;
+}
+
+ul, li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+/* Helpers */
+.c-green {
+  color: var(--color-green);
+}
+
+.c-base-lilac {
+  color: var(--color-base-lilac);
+}
+
+/* Vue transitions */
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Fade animation */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Slide up animation */
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(100%);
+}
+
+/* Page slide transition */
+.slide-left-enter-active,
+.slide-right-enter-active,
+.slide-left-leave-active,
+.slide-right-leave-active {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: all 0.3s;
+}
+
+.slide-left-enter-from, .slide-right-leave-to {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+.slide-left-leave-to, .slide-right-enter-from {
+  opacity: 1;
+  transform: translateX(-100%);
+}
+
+.slide-left-leave-to, .slide-right-leave-to {
+  opacity: 0.3;
+}
+
+.slide-left-enter-to, .slide-right-enter-to {
+  transform: translateX(0);
+}

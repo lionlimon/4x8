@@ -1,0 +1,30 @@
+.modal {
+  &__title {
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    //margin: 0px 0 20px;
+    padding: 0 16px;
+  }
+
+  &__sub-title {
+    color: rgb(var(--secondary-text));
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 5px;
+  }
+}
+
+:global(.bottom-sheet__content:not(._)) {
+  border-radius: 33px 33px 0 0;
+}
+
+:global(.bottom-sheet__draggable-thumb:not(._)) {
+  opacity: 0.1;
+  height: 3px;
+  background-color: rgb(var(--black));
+}
+
+:global(.bottom-sheet__draggable-area:not(._)) {
+  padding-bottom: 10px;
+}

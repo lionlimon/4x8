@@ -1,0 +1,30 @@
+.card {
+  --padding: var(--card-padding, 12px);
+  padding: var(--padding);
+  background-color: var(--base-bg-contrast);
+  border-radius: var(--radius-out);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  appearance: none;
+
+  &__header {
+    padding-bottom: var(--padding);
+    margin-bottom: var(--padding);
+    color: var(--color-text-primary-white);
+    font-size: 14px;
+
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: calc(-1 * var(--padding));
+      right: calc(-1 * var(--padding));
+      height: 1px;
+      background-color: var(--buttons-and-links-pressed-bg);
+    }
+  }
+}

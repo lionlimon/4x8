@@ -1,0 +1,43 @@
+.base-layout {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow: auto;
+  display: grid;
+  align-items: start;
+  grid-template-rows: auto 1fr auto;
+
+  &__header,
+  &__footer {
+    position: sticky;
+    left: 0;
+    right: 0;
+  }
+
+  &__header {
+    top: 0;
+    z-index: 1;
+  }
+
+  &--static-header &__header {
+    position: static;
+  }
+
+  &__footer {
+    margin-top: auto;
+    bottom: 0;
+  }
+
+  &__content {
+    flex-shrink: 1;
+    padding-bottom: 16px;
+    height: 100%;
+    overflow: auto;
+    @include scrollbar;
+  }
+
+  &--no-scroll &__content {
+    overflow: unset;
+    height: auto;
+  }
+}

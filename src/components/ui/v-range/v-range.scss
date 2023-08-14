@@ -1,0 +1,60 @@
+@mixin track {
+  background: inherit;
+  border-radius: 10px;
+  height: 6px;
+  width: 100%;
+}
+
+@mixin thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 12px;
+  width: 30px;
+  border: 2px solid var(--white);
+  background-color: var(--color-primary-white);
+  border-radius: 4px;
+  margin-top: -3px;
+  box-sizing: border-box;
+}
+
+.input-range {
+  display: flex;
+  width: 100%;
+  position: relative;
+  height: 25px;
+  padding-top: 3px;
+
+  &__input {
+    width: 100%;
+    -webkit-appearance: none;
+    cursor: pointer;
+    border-radius: 10px;
+    height: 6px;
+    background: linear-gradient(to right, var(--color-bg-violet) 0%, var(--color-bg-violet) var(--progress-percent), var(--buttons-and-links-bg) var(--progress-percent), var(--buttons-and-links-bg) 100%);
+
+    &::-webkit-slider-runnable-track {
+      @include track;
+    }
+
+    &::-moz-range-track {
+      @include track;
+    }
+
+    &::-webkit-slider-thumb {
+      @include thumb;
+    }
+
+    &::-moz-range-thumb {
+      @include thumb;
+    }
+  }
+
+  &__label {
+    min-width: 30px;
+    text-align: center;
+    position: absolute;
+    top: 12px;
+    @include font(14px, 120%, 500);
+    color: var(--color-text-primary-white);
+  }
+}

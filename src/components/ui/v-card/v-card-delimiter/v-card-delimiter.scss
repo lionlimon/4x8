@@ -1,0 +1,6 @@
+.card-delimiter {
+  margin: var(--padding) calc(-1 * var(--padding));
+
+  background-color: var(--buttons-and-links-pressed-bg);
+  height: 1px;
+}

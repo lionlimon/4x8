@@ -1,0 +1,27 @@
+:root {
+  /* Colors */
+  --white: 255 255 255;
+  --black: 0 0 0;
+
+  /* Backgrounds */
+  --background: 246 246 246;
+  --bg-contrast: 255 255 255;
+
+  /* States */
+  --color-success: #9BC620;
+  --color-error: #F53D3D;
+  --color-notify: #F0F28D;
+
+  /* Shadows */
+  --base-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.10);
+  --base-shadow-top: 0px -10px 25px 0px rgba(0, 0, 0, 0.10);
+
+  /* Theme */
+  --text: 24 24 24;
+  --secondary-text: 159 159 159;
+  --main-font: 'Roboto', sans-serif;
+  --accent: 253 110 79;
+
+
+  --radius-main: 8px;
+}

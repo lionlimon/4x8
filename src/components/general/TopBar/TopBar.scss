@@ -1,0 +1,38 @@
+.top-bar {
+  display: flex;
+  grid-template-columns: 20px auto 20px;
+  background-color: rgb(var(--bg-contrast));
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px 12px;
+  box-shadow: var(--base-shadow);
+  min-height: 46px;
+
+  &__info {
+    position: relative;
+    text-align: center;
+  }
+
+  &__back {
+    position: absolute;
+    left: 20px;
+
+    display: flex;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+  }
+
+  &__screen-title {
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 500;
+  }
+
+  &__title {
+    font-size: 14px;
+    color: rgb(var(--secondary-text));
+  }
+}

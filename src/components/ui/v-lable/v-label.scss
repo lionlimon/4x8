@@ -1,0 +1,14 @@
+.label {
+  background-image: var(--color-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px;
+  border-radius: var(--radius-main);
+  font-size: 12px;
+  line-height: 1.4;
+
+  &:active {
+    background-image: var(--color-secondary-pressed);
+  }
+}

@@ -1,0 +1,171 @@
+import {defineStore} from "pinia";
+import {useStorage} from "@vueuse/core";
+import {
+  TrainingRecord,
+  SetApproachModel,
+  DeteleApproachModel,
+  TrainingApproachModel,
+  TrainingExerciseModel
+} from "./types";
+import {computed, ref} from "vue";
+import {useRouter} from "vue-router";
+
+export const useTrainingStore = defineStore('training', () => {
+  const trainings = useStorage<TrainingRecord>('training-record', {});
+  const router = useRouter();
+  const selectedDayDate = ref(new Date());
+
+  const selectedDayTraining = computed(() => {
+    const date = getKeyFromDateForRecord(selectedDayDate.value);
+    return trainings.value[date];
+  });
+
+  const setSelectedDate = (date: Date) => selectedDayDate.value = date;
+
+  const approachInitial: TrainingApproachModel = {
+    reps: 1,
+    weight: 1,
+    weightUnit: 'кг'
+  };
+
+  const exerciseInitial: TrainingExerciseModel = {
+    name: '',
+    approaches: [{...approachInitial}],
+  }
+
+  const getKeyFromDateForRecord = (date: Date) => {
+    const dateForKey = new Date(date);
+
+    dateForKey.setHours(0, 0, 0, 0);
+    return dateForKey.toISOString();
+  }
+
+  const initiateTraining = (isToday = true, trainingDate = new Date()) => {
+    const date = trainingDate.toISOString();
+
+    const dateForKeyISO = getKeyFromDateForRecord(trainingDate);
+
+    if (trainings.value[dateForKeyISO]) {
+      return;
+    }
+
+    const checkIsFinished = () => {
+      const nowDate = new Date();
+      const selectedDate = new Date(trainingDate);
+
+      nowDate.setHours(0, 0, 0, 0);
+      selectedDate.setHours(0, 0, 0, 0,);
+
+      return Number(selectedDate) < Number(nowDate);
+    }
+
+    trainings.value[dateForKeyISO] = {
+      date,
+      exercises: [{...exerciseInitial}],
+      isFinished: isToday ? false : checkIsFinished(),
+      finishDate: null,
+      isSavedToServer: false
+    }
+  }
+
+  const startTraining = () => {
+    initiateTraining();
+  }
+
+  const startTrainingByDate = (date: Date) => {
+    setSelectedDate(date);
+    initiateTraining(false, date);
+  }
+
+  const todayTraining = computed(() => {
+    const date = getKeyFromDateForRecord(new Date());
+    return trainings.value[date];
+  });
+
+  const addExercise = () => {
+    if (!selectedDayTraining.value) {return;}
+
+    selectedDayTraining.value.exercises.push({...exerciseInitial});
+  }
+
+  const canAddExercise = computed(() => {
+    if (!selectedDayTraining.value) {return true;}
+
+    const exercises = selectedDayTraining.value.exercises;
+
+    if (exercises.length === 0) {return true;}
+
+    if (!exercises[exercises.length - 1]?.name) {return false;}
+
+    return true
+  });
+
+  const setExerciseName = (name: string, exerciseIndex: number) => {
+    if (!selectedDayTraining.value) {return;}
+
+    const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
+
+    currentExercise.name = name;
+  }
+
+  const addApproach = (exerciseIndex: number) => {
+    if (!selectedDayTraining.value) {return;}
+
+    const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
+
+    if (currentExercise.approaches.length > 0) {
+      currentExercise.approaches.push(
+        {...approachInitial, ...currentExercise.approaches[currentExercise.approaches.length - 1]}
+      );
+    } else {
+      currentExercise.approaches.push({...approachInitial});
+    }
+  }
+
+  const setApproach = ({ approachIndex, exerciseIndex, approach }: SetApproachModel) => {
+    if (!selectedDayTraining.value) {return;}
+
+    const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
+    if (!currentExercise) {return;}
+
+    const currentApproach = currentExercise.approaches[approachIndex];
+    if (!currentApproach) {return;}
+
+    currentExercise.approaches[approachIndex] = approach;
+  }
+
+  const deleteApproach = ({ exerciseIndex, approachIndex }: DeteleApproachModel) => {
+    if (!selectedDayTraining.value) {return;}
+
+    const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
+    if (!currentExercise) {return;}
+
+    currentExercise.approaches.splice(exerciseIndex, 1);
+  }
+
+  const finishExercise = () => {
+    if (!todayTraining.value) {return;}
+    todayTraining.value.isFinished = true;
+    router.push({ name: 'home' });
+  }
+
+  const getTrainingByDate = (date: Date) => {
+    return trainings.value[getKeyFromDateForRecord(date)];
+  }
+
+  return {
+    startTraining,
+    trainings,
+    todayTraining,
+    addExercise,
+    setExerciseName,
+    addApproach,
+    setApproach,
+    canAddExercise,
+    deleteApproach,
+    finishExercise,
+    getTrainingByDate,
+    setSelectedDate,
+    startTrainingByDate
+  }
+});
