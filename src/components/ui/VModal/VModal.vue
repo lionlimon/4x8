@@ -1,6 +1,6 @@
 <template>
   <div class="modal">
-    <VueBottomSheet :transition-duration="0.3" ref="bottomSheet">
+    <VueBottomSheet :max-height="500" :transition-duration="0.3" ref="bottomSheet">
       <h4 v-if="title" class="modal__title">
         {{ title }}
       </h4>

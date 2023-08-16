@@ -2,6 +2,7 @@ export type TrainingApproachModel = {
   reps: number,
   weight: number,
   weightUnit: string,
+  id: string
 }
 
 export type TrainingExerciseModel = {

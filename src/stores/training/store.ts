@@ -25,7 +25,8 @@ export const useTrainingStore = defineStore('training', () => {
   const approachInitial: TrainingApproachModel = {
     reps: 1,
     weight: 1,
-    weightUnit: 'кг'
+    weightUnit: 'кг',
+    id: new Date().toISOString(),
   };
 
   const exerciseInitial: TrainingExerciseModel = {
@@ -113,12 +114,17 @@ export const useTrainingStore = defineStore('training', () => {
 
     const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
 
+    const newId = new Date().toISOString();
     if (currentExercise.approaches.length > 0) {
       currentExercise.approaches.push(
-        {...approachInitial, ...currentExercise.approaches[currentExercise.approaches.length - 1]}
+        {
+          ...approachInitial,
+          ...currentExercise.approaches[currentExercise.approaches.length - 1],
+          id: newId,
+        }
       );
     } else {
-      currentExercise.approaches.push({...approachInitial});
+      currentExercise.approaches.push({...approachInitial, id: newId});
     }
   }
 
@@ -140,7 +146,7 @@ export const useTrainingStore = defineStore('training', () => {
     const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
     if (!currentExercise) {return;}
 
-    currentExercise.approaches.splice(exerciseIndex, 1);
+    currentExercise.approaches.splice(approachIndex, 1);
   }
 
   const finishExercise = () => {

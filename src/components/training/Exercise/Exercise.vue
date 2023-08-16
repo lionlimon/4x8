@@ -4,7 +4,7 @@
 
     <ul class="exercise__approaches">
       <TransitionGroup name="fade">
-        <li v-for="(approach, i) in exercise.approaches" :key="i" class="exercise__approach">
+        <li v-for="(approach, i) in exercise.approaches" :key="approach.id ?? i" class="exercise__approach">
           <ExerciseApproach
             :approach="approach"
             :index="i"
