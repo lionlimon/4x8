@@ -31,7 +31,7 @@ export const useTrainingStore = defineStore('training', () => {
 
   const exerciseInitial: TrainingExerciseModel = {
     name: '',
-    approaches: [{...approachInitial}],
+    approaches: [{...approachInitial, id: new Date().toISOString()}],
   }
 
   const getKeyFromDateForRecord = (date: Date) => {
