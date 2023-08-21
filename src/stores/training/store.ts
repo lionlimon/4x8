@@ -159,6 +159,22 @@ export const useTrainingStore = defineStore('training', () => {
     return trainings.value[getKeyFromDateForRecord(date)];
   }
 
+  const copyTraining = (date: Date) => {
+    const training = getTrainingByDate(date);
+    if (training) {
+      trainings.value[getKeyFromDateForRecord(new Date())] = undefined;
+      
+      startTraining();
+
+      training.exercises.forEach(({name}, i) => {
+        if (i !== 0) {
+          addExercise();
+        }
+        setExerciseName(name, i);
+      })
+    }
+  }
+
   return {
     startTraining,
     trainings,
@@ -172,6 +188,7 @@ export const useTrainingStore = defineStore('training', () => {
     finishExercise,
     getTrainingByDate,
     setSelectedDate,
-    startTrainingByDate
+    startTrainingByDate,
+    copyTraining
   }
 });

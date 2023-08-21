@@ -9,6 +9,8 @@ export const initHandlers = (router: Router) => {
     const toDepth = to.path.split('/').filter(Boolean).length;
     const fromDepth = from.path.split('/').filter(Boolean).length;
 
-    to.meta.transition = toDepth > fromDepth ? 'slide-left' : 'slide-right';
+    if (!to.meta.isFirstPage) {
+      to.meta.transition = toDepth > fromDepth ? 'slide-left' : 'slide-right';
+    }
   });
 };

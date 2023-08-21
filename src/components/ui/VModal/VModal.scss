@@ -4,26 +4,30 @@
     font-size: 18px;
     text-align: center;
     padding: 0 16px;
+    top: 0;
   }
 
-  &__sub-title {
+  &__sub-title, {
     color: rgb(var(--secondary-text));
     margin: 0 auto;
     text-align: center;
     margin-top: 5px;
   }
+
 }
 
-:global(.bottom-sheet__content:not(._)) {
-  border-radius: 33px 33px 0 0;
+:global(.bottom-sheet-backdrop) {
+  z-index: 1;
 }
 
-:global(.bottom-sheet__draggable-thumb:not(._)) {
+:global(.bottom-sheet) {
+  --bottom-sheet-max-height: 75vh;
+  --bottom-sheet-border-radius: 33px 33px 0 0;
+}
+
+:global(.bottom-sheet-header-bar) {
   opacity: 0.1;
   height: 3px;
+  width: 40px;
   background-color: rgb(var(--black));
-}
-
-:global(.bottom-sheet__draggable-area:not(._)) {
-  padding-bottom: 10px;
 }

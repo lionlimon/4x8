@@ -22,6 +22,15 @@
       >
         {{ changeButtonText }}
       </VButton>
+
+      <VButton
+        v-if="showCopyButton"
+        wide
+        size="m"
+        @click="onCopyClick"
+      >
+        Скопировать этот план
+      </VButton>
     </div>
   </div>
 </template>
@@ -30,19 +39,30 @@
 import {useTrainingStore} from "@/stores/training";
 import {VButton} from "@ui/VButton";
 import {computed} from "vue";
+import {useRouter} from "vue-router";
 
 const props = defineProps<{
   date: Date | null
 }>();
 
+const router = useRouter();
 const trainingStore = useTrainingStore();
 const changeButtonText = computed(() => {
-  if (trainingStore.getTrainingByDate(props.date)) {
+  if (props.date && trainingStore.getTrainingByDate(props.date)) {
     return 'Изменть';
   }
 
   return 'Заполнить день';
-})
+});
+
+const showCopyButton = computed(() => props.date && !!trainingStore.getTrainingByDate(props.date))
+const onCopyClick = () => {
+  if (props.date) {
+    trainingStore.copyTraining(props.date);
+
+    router.push({ name: 'training', query: { mode: 'new-training' } });
+  }
+}
 </script>
 
 <style scoped lang="scss" src="./DayInfoPopup.scss"></style>

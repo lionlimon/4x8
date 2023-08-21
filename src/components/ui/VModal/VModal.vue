@@ -1,24 +1,29 @@
 <template>
   <div class="modal">
-    <VueBottomSheet :max-height="500" :transition-duration="0.3" ref="bottomSheet">
-      <h4 v-if="title" class="modal__title">
-        {{ title }}
-      </h4>
-      <p class="modal__sub-title" v-if="subTitle">{{ subTitle }}</p>
-      <slot></slot>
-    </VueBottomSheet>
+    <Sheet no-stretch only-header-swipe v-model:visible="isOpen">
+      <div class="modal__header">
+        <h4 v-if="title" class="modal__title">
+          {{ title }}
+        </h4>
+        <p class="modal__sub-title" v-if="subTitle">{{ subTitle }}</p>
+      </div>
+      <div class="modal__inner">
+        <slot></slot>
+      </div>
+    </Sheet>
   </div>
 </template>
 
 <script setup lang="ts">
-import VueBottomSheet from "@webzlodimir/vue-bottom-sheet";
-import  "@webzlodimir/vue-bottom-sheet/dist/style.css";
 import {ref, onBeforeUnmount} from 'vue';
+import { Sheet } from 'bottom-sheet-vue3'
+import 'bottom-sheet-vue3/style.css'
 
 type Emits = {
   (e: 'onOpen'): void;
   (e: 'onClose'): void;
 };
+
 const emit = defineEmits<Emits>();
 
 const props = defineProps({
@@ -33,10 +38,9 @@ const props = defineProps({
   }
 });
 
-const bottomSheet = ref<InstanceType<typeof VueBottomSheet>>();
-
+const isOpen = ref(false);
 const close = () => {
-  bottomSheet.value?.close();
+  isOpen.value = false
   emit('onClose');
 };
 
@@ -44,7 +48,7 @@ onBeforeUnmount(() => close());
 
 defineExpose({
   open() {
-    bottomSheet.value?.open();
+    isOpen.value = true
     emit('onOpen');
   },
 
