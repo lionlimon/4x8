@@ -5,8 +5,6 @@ module.exports = {
   root: true,
   extends: [
     'plugin:vue/vue3-essential',
-    'eslint:recommended',
-    '@vue/eslint-config-typescript',
     '@vue/eslint-config-airbnb-with-typescript',
   ],
 
@@ -16,6 +14,14 @@ module.exports = {
 
   rules: {
     'no-param-reassign': 0,
+    'vue/max-attributes-per-line': ['error', {
+      'singleline': {
+        'max': 3
+      },
+      'multiline': {
+        'max': 1
+      }
+    }],
     'vue/component-name-in-template-casing': ['error', 'PascalCase', { registeredComponentsOnly: false }],
     'vue/component-definition-name-casing': ['error', 'PascalCase'],
     'no-await-in-loop': 'off',
@@ -36,7 +42,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ['src/pages/**/*.vue'], // Change this to default.vue path
+      files: ['src/pages/**/*.vue'],
       rules: {
         'vue/multi-word-component-names': 'off',
       },
