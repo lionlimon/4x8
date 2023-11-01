@@ -15,23 +15,23 @@ export default defineConfig((env) => {
       vue(),
       createSvgSpritePlugin({
         include: '**/icons/**/*.svg',
-        symbolId: '[name]'
-      })
+        symbolId: '[name]',
+      }),
     ],
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "src/assets/style/_mixins.scss";`
-        }
-      }
+          additionalData: '@import "src/assets/style/_mixins.scss";',
+        },
+      },
     },
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
-        '@ui': fileURLToPath(new URL('./src/components/ui', import.meta.url))
-      }
+        '@ui': fileURLToPath(new URL('./src/components/ui', import.meta.url)),
+      },
     },
 
     base: baseUrl,
-  }
+  };
 });
