@@ -13,14 +13,14 @@ module.exports = {
   },
 
   rules: {
-    'no-param-reassign': 0,
+    'no-param-reassign': ['error', { props: false }],
     'vue/max-attributes-per-line': ['error', {
-      'singleline': {
-        'max': 3
+      singleline: {
+        max: 3,
       },
-      'multiline': {
-        'max': 1
-      }
+      multiline: {
+        max: 1,
+      },
     }],
     'vue/component-name-in-template-casing': ['error', 'PascalCase', { registeredComponentsOnly: false }],
     'vue/component-definition-name-casing': ['error', 'PascalCase'],
