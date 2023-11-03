@@ -6,7 +6,7 @@ export const axiosInstance = axios.create({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     common: {
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  }
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+  },
 });

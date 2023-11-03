@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import {useVModel} from "@vueuse/core";
+import { useVModel } from '@vueuse/core';
 
 type Emits = { (e: 'update:modelValue', value: number) };
 const emit = defineEmits<Emits>();

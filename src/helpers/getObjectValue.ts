@@ -1,6 +1,6 @@
 export const getObjectValue = <
   T extends Record<string, unknown>,
-  K extends keyof T
+  K extends keyof T,
 >(obj: T, path: K) => {
   const keys = String(path).split('.');
   let value = obj;

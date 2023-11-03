@@ -5,12 +5,5 @@ export const initHandlers = (router: Router) => {
     if (!from.name) {
       to.meta.isFirstPage = true;
     }
-
-    const toDepth = to.path.split('/').filter(Boolean).length;
-    const fromDepth = from.path.split('/').filter(Boolean).length;
-
-    if (!to.meta.isFirstPage) {
-      to.meta.transition = toDepth > fromDepth ? 'slide-left' : 'slide-right';
-    }
   });
 };

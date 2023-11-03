@@ -49,10 +49,6 @@ ul, li {
   padding: 0;
 }
 
-.grecaptcha-badge {
-  visibility: hidden;
-}
-
 /* Helpers */
 .c-green {
   color: var(--color-green);
@@ -78,6 +74,16 @@ ul, li {
 
 .fade-enter-from,
 .fade-leave-to {
+  opacity: 0;
+}
+
+.layout-fade-enter-active,
+.layout-fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.layout-fade-enter-from,
+.layout-fade-leave-to {
   opacity: 0;
 }
 

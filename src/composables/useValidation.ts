@@ -1,12 +1,12 @@
-import {ServerErrors, useVuelidate, Validation} from '@vuelidate/core';
+import { ServerErrors, useVuelidate, Validation } from '@vuelidate/core';
 import {
   computed, isRef, Ref, ref,
 } from 'vue';
-import {getObjectValue} from "@/helpers/getObjectValue";
+import { getObjectValue } from '@/helpers/getObjectValue';
 
-type Rules<F> = Partial<Record<keyof F, unknown>>
+type Rules<F> = Partial<Record<keyof F, unknown>>;
 export const useValidation = <
-  F extends Record<string, unknown> | Ref<unknown>
+  F extends Record<string, unknown> | Ref<unknown>,
 >(rules: Rules<F>, form: F) => {
   const formFields = Object.keys(form);
   const serverErrors = ref({} as ServerErrors);
@@ -37,6 +37,6 @@ export const useValidation = <
   };
 
   return {
-    serverErrors, getError, validation, setInitialServerErrors, syncServerErrors, touch
+    serverErrors, getError, validation, setInitialServerErrors, syncServerErrors, touch,
   };
 };

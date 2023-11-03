@@ -1,7 +1,7 @@
 <template>
-  <BaseLayout class="training">
+  <ScreenLayout class="training">
     <template #header>
-      <TopBar back-link="/" :title="currentDate" screen-title="Тренировка"/>
+      <TopBar :title="currentDate" screen-title="Тренировка" />
     </template>
     <ul class="training__exercises" v-if="currentTraining">
       <TransitionGroup name="fade">
@@ -16,7 +16,7 @@
             @add-approach-click="trainingStore.addApproach(i)"
             @delete-approach-click="(approachIndex) => trainingStore.deleteApproach({
               approachIndex,
-              exerciseIndex: i
+              exerciseIndex: i,
             })"
             @update-approach="(approachIndex, approach) => trainingStore.setApproach({
               approach,
@@ -28,45 +28,43 @@
       </TransitionGroup>
     </ul>
 
-    <template #footer>
-      <MainFooter class="training__footer">
-        <VButton
-          :disabled="!trainingStore.canAddExercise"
-          variant="outline"
-          size="m"
-          wide
-          @click="trainingStore.addExercise()"
-        >
-          <VIcon name="plus" />
-          Добавить упражнение
-        </VButton>
-        <VButton size="m" wide @click="onSaveClick">{{ saveButtonText }}</VButton>
-      </MainFooter>
-    </template>
-  </BaseLayout>
+    <VButton
+      :disabled="!trainingStore.canAddExercise"
+      variant="outline"
+      size="m"
+      wide
+      @click="trainingStore.addExercise()"
+    >
+      <VIcon name="plus" />
+      Добавить упражнение
+    </VButton>
+    <VButton size="m" wide @click="onSaveClick">{{ saveButtonText }}</VButton>
+  </ScreenLayout>
 </template>
 
 <script setup lang="ts">
-import { BaseLayout } from "@/layouts/BaseLayout";
-import { TopBar } from "@/components/general/TopBar/";
-import { computed } from "vue";
-import { formatDate } from "@/helpers/formatDate";
-import { Exercise } from "@/components/training";
-import { MainFooter } from "@/components/general/MainFooter/";
-import { VButton } from "@ui/VButton";
-import { VIcon } from "@ui/VIcon/";
-import {useTrainingStore} from "@/stores/training";
-import {useRoute, useRouter} from "vue-router";
+import { computed } from 'vue';
+import { VButton } from '@ui/VButton';
+import { VIcon } from '@ui/VIcon/';
+import { useRoute, useRouter } from 'vue-router';
+import { BaseLayout } from '@/layouts/BaseLayout';
+import { TopBar } from '@/components/general/TopBar/';
+import { formatDate } from '@/helpers/formatDate';
+import { Exercise } from '@/components/training';
+import { MainFooter } from '@/components/general/MainFooter/';
+import { useTrainingStore } from '@/stores/training';
+import ScreenLayout from '@/layouts/ScreenLayout/ScreenLayout.vue';
 
 const route = useRoute();
 const router = useRouter();
+const trainingStore = useTrainingStore();
 
 const currentDate = computed(() => {
   if (route.query.date) {
     return formatDate(new Date(route.query.date as string));
   }
-  return formatDate(new Date())
-})
+  return formatDate(new Date());
+});
 
 const currentTraining = computed(() => {
   if (route.query.date) {
@@ -74,9 +72,7 @@ const currentTraining = computed(() => {
   }
 
   return trainingStore.todayTraining;
-})
-
-const trainingStore = useTrainingStore();
+});
 
 if (!trainingStore.todayTraining && route.query.mode === 'new-training') {
   trainingStore.startTraining();
@@ -88,7 +84,7 @@ if (route.query.date) {
 
 const onExerciseNameChange = (name: string, exerciseIndex: number) => {
   trainingStore.setExerciseName(name, exerciseIndex);
-}
+};
 
 const onSaveClick = () => {
   if (route.query.mode === 'new-training') {
@@ -96,12 +92,12 @@ const onSaveClick = () => {
   }
 
   router.push({ name: 'home' });
-}
+};
 
 const saveButtonText = computed(() => {
-  if (route.query.mode === 'new-training' && !trainingStore.todayTraining?.isFinished) {return 'Завершить'}
+  if (route.query.mode === 'new-training' && !trainingStore.todayTraining?.isFinished) { return 'Завершить'; }
   return 'Сохранить';
-})
+});
 </script>
 
 <style scoped lang="scss" src="./training.scss"></style>

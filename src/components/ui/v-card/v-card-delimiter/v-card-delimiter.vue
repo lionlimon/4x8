@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!hideDelimiter" class="card-delimiter"></div>
-  <slot></slot>
+  <div v-if="!hideDelimiter" class="card-delimiter" />
+  <slot />
 </template>
 
 <script setup lang="ts">

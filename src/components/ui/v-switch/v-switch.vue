@@ -1,7 +1,12 @@
 <template>
   <label :for="uid" class="switch">
-    <input :id="uid" v-bind="$attrs" :checked="modelValue" type="checkbox" @change="onChange" />
-    <span class="slider"></span>
+    <input
+      :id="uid"
+      v-bind="$attrs"
+      :checked="modelValue"
+      type="checkbox"
+      @change="onChange" />
+    <span class="slider" />
   </label>
 </template>
 
@@ -9,20 +14,20 @@
 import { computed, getCurrentInstance } from 'vue';
 
 export default {
-  name: 'v-switch',
+  name: 'VSwitch',
   inheritAttrs: false,
   props: {
     modelValue: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(_, { emit }) {
     const uid = computed(() => {
-      let instance = getCurrentInstance();
-      if (!instance?.uid) {return '';}
-      return 'switch-' + instance.uid;
+      const instance = getCurrentInstance();
+      if (!instance?.uid) { return ''; }
+      return `switch-${instance.uid}`;
     });
 
     const onChange = (e: Event) => {
@@ -31,9 +36,9 @@ export default {
 
     return {
       uid,
-      onChange
+      onChange,
     };
-  }
+  },
 };
 </script>
 

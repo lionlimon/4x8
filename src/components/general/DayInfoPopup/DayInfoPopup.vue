@@ -18,7 +18,7 @@
       <VButton
         wide
         size="m"
-        :to="{ name: 'training', query: {date: date?.toISOString()} }"
+        :to="{ name: 'training', query: { date: date?.toISOString() } }"
       >
         {{ changeButtonText }}
       </VButton>
@@ -36,10 +36,10 @@
 </template>
 
 <script setup lang="ts">
-import {useTrainingStore} from "@/stores/training";
-import {VButton} from "@ui/VButton";
-import {computed} from "vue";
-import {useRouter} from "vue-router";
+import { VButton } from '@ui/VButton';
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useTrainingStore } from '@/stores/training';
 
 const props = defineProps<{
   date: Date | null
@@ -55,14 +55,14 @@ const changeButtonText = computed(() => {
   return 'Заполнить день';
 });
 
-const showCopyButton = computed(() => props.date && !!trainingStore.getTrainingByDate(props.date))
+const showCopyButton = computed(() => props.date && !!trainingStore.getTrainingByDate(props.date));
 const onCopyClick = () => {
   if (props.date) {
     trainingStore.copyTraining(props.date);
 
     router.push({ name: 'training', query: { mode: 'new-training' } });
   }
-}
+};
 </script>
 
 <style scoped lang="scss" src="./DayInfoPopup.scss"></style>

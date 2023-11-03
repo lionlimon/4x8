@@ -1,0 +1,32 @@
+.bottom-bar {
+  padding-left: 40px;
+  padding-right: 40px;
+  min-height: 95px;
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__list-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: rgb(var(--secondary-text));
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 1.75;
+    font-weight: 500;
+    border-radius: 10px;
+
+    &.router-link-active {
+      color: rgb(var(--accent));
+    }
+
+    &:active {
+      opacity: .7;
+    }
+  }
+}

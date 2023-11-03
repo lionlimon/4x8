@@ -9,7 +9,7 @@
     </div>
 
     <VCalendarDay
-      v-for="({day, month, year}) in allDays"
+      v-for="({ day, month, year }) in allDays"
       :key="`${day}${month}${year}`"
       :day="day"
       :month="month"
@@ -21,16 +21,16 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed, watch} from "vue";
-import { VCalendarDay } from "./VCalendarDay";
+import { ref, computed, watch } from 'vue';
+import { VCalendarDay } from './VCalendarDay';
 
-type Emits = { (e: 'day-click', date: Date): void};
-type Day = {day: number, month: number, year: number};
+type Emits = { (e: 'day-click', date: Date): void };
+type Day = { day: number, month: number, year: number };
 const emit = defineEmits<Emits>();
 
 const props = defineProps<{
   currentDate: Date,
-  isTrainingDayChecker: (date: Date) => boolean
+  isTrainingDayChecker:(date: Date) => boolean
 }>();
 
 const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
@@ -43,7 +43,7 @@ const getDaysCount = (year: number, month: number) => {
   const dateTo = new Date(year, month + 1, 1);
 
   return Math.round((Number(dateTo) - Number(dateFrom)) / 1000 / 3600 / 24);
-}
+};
 
 const currentMonthDays = computed(() => {
   const year = currentDate.value.getFullYear();
@@ -53,15 +53,15 @@ const currentMonthDays = computed(() => {
 });
 
 const allDays = computed(() => {
-  const currentDays: Day[]  = [];
+  const currentDays: Day[] = [];
 
   const mapDay = (date: Date, day: number) => ({
-    day: day,
+    day,
     month: date.getMonth(),
     year: date.getFullYear(),
   });
 
-  for (let i = 1; i <= currentMonthDays.value; i ++) {
+  for (let i = 1; i <= currentMonthDays.value; i++) {
     currentDays.push(mapDay(currentDate.value, i));
   }
 

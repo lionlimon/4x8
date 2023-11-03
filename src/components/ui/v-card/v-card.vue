@@ -1,11 +1,11 @@
 <template>
-  <component :is="tag" class="card">
+  <Component :is="tag" class="card">
     <div v-if="$slots.header" class="card__header">
-      <slot name="header"></slot>
+      <slot name="header" />
     </div>
 
-    <slot></slot>
-  </component>
+    <slot />
+  </Component>
 </template>
 
 <script setup lang="ts">
@@ -17,8 +17,8 @@ defineEmits<Emits>();
 const props = defineProps({
   isButton: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const tag = computed(() => (props.isButton ? 'button' : 'div'));

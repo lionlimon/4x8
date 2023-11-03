@@ -1,21 +1,21 @@
 <template>
   <div class="home-top-bar">
-    <top-bar>
+    <TopBar>
       <VMonthPicker v-model="currentMonth" />
-    </top-bar>
+    </TopBar>
   </div>
 </template>
 
 <script setup lang="ts">
-import {TopBar} from "@/components/general/TopBar";
-import {useCalendarStore} from "@/stores/calendar";
-import {VMonthPicker} from "@ui/VMonthPicker";
-import {ref, watch} from "vue";
+import { VMonthPicker } from '@ui/VMonthPicker';
+import { ref, watch } from 'vue';
+import { TopBar } from '@/components/general/TopBar';
+import { useCalendarStore } from '@/stores/calendar';
 
 const calendarStore = useCalendarStore();
 
 type Emits = {};
-const emit = defineEmits<Emits>();
+defineEmits<Emits>();
 
 const currentMonth = ref(calendarStore.currentMonth);
 watch(currentMonth, () => calendarStore.setMonth(currentMonth.value));

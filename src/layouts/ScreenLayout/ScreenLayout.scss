@@ -1,0 +1,17 @@
+.screen-layout {
+  height: 100%;
+
+  &__header,
+  &__footer {
+    position: sticky;
+  }
+
+  &__header {
+    top: 0;
+    z-index: 10;
+  }
+
+  &__content {
+    height: 100%;
+  }
+}

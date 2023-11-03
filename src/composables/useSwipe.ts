@@ -29,17 +29,11 @@ export const useSwipe = (target: HTMLElement, options: IUseSwipeOptions) => {
 
     if (Math.abs(xDiff) > Math.abs(yDiff)) {
       if (xDiff > 0) {
-        if (options.onLeft) options.onLeft();
-      } else {
-        if (options.onRight) options.onRight();
-      }
-    } else {
-      if (yDiff > 0) {
-        if (options.onUp) options.onUp();
-      } else {
-        if (options.onDown) options.onDown();
-      }
-    }
+        if (options.onLeft) { options.onLeft(); }
+      } else if (options.onRight) { options.onRight(); }
+    } else if (yDiff > 0) {
+      if (options.onUp) { options.onUp(); }
+    } else if (options.onDown) { options.onDown(); }
   };
   const handleTouchEnd = () => {
     xDown.value = null;

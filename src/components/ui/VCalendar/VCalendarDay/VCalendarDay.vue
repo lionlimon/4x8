@@ -2,14 +2,18 @@
   <button :class="['calendar-day', modifiers]">
     {{ day }}
     <span class="calendar-day__badge">
-      <VIcon class="calendar-day__badge-icon" name="dumb" width="19" height="11"/>
+      <VIcon
+        class="calendar-day__badge-icon"
+        name="dumb"
+        width="19"
+        height="11" />
     </span>
   </button>
 </template>
 
 <script setup lang="ts">
-import {computed} from "vue";
-import VIcon from "@ui/VIcon/VIcon.vue";
+import { computed } from 'vue';
+import VIcon from '@ui/VIcon/VIcon.vue';
 
 type Emits = {};
 const emit = defineEmits<Emits>();

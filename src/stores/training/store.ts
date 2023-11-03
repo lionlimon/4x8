@@ -1,19 +1,26 @@
-import {defineStore} from "pinia";
-import {useStorage} from "@vueuse/core";
+import { defineStore } from 'pinia';
+import { useStorage } from '@vueuse/core';
+import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import {
   TrainingRecord,
   SetApproachModel,
-  DeteleApproachModel,
+  DeleteApproachModel,
   TrainingApproachModel,
-  TrainingExerciseModel
-} from "./types";
-import {computed, ref} from "vue";
-import {useRouter} from "vue-router";
+  TrainingExerciseModel,
+} from './types';
 
 export const useTrainingStore = defineStore('training', () => {
   const trainings = useStorage<TrainingRecord>('training-record', {});
   const router = useRouter();
   const selectedDayDate = ref(new Date());
+
+  const getKeyFromDateForRecord = (date: Date) => {
+    const dateForKey = new Date(date);
+
+    dateForKey.setHours(0, 0, 0, 0);
+    return dateForKey.toISOString();
+  };
 
   const selectedDayTraining = computed(() => {
     const date = getKeyFromDateForRecord(selectedDayDate.value);
@@ -31,15 +38,8 @@ export const useTrainingStore = defineStore('training', () => {
 
   const exerciseInitial: TrainingExerciseModel = {
     name: '',
-    approaches: [{...approachInitial, id: new Date().toISOString()}],
-  }
-
-  const getKeyFromDateForRecord = (date: Date) => {
-    const dateForKey = new Date(date);
-
-    dateForKey.setHours(0, 0, 0, 0);
-    return dateForKey.toISOString();
-  }
+    approaches: [{ ...approachInitial, id: new Date().toISOString() }],
+  };
 
   const initiateTraining = (isToday = true, trainingDate = new Date()) => {
     const date = trainingDate.toISOString();
@@ -55,28 +55,28 @@ export const useTrainingStore = defineStore('training', () => {
       const selectedDate = new Date(trainingDate);
 
       nowDate.setHours(0, 0, 0, 0);
-      selectedDate.setHours(0, 0, 0, 0,);
+      selectedDate.setHours(0, 0, 0, 0);
 
       return Number(selectedDate) < Number(nowDate);
-    }
+    };
 
     trainings.value[dateForKeyISO] = {
       date,
-      exercises: [{...exerciseInitial}],
+      exercises: [{ ...exerciseInitial }],
       isFinished: isToday ? false : checkIsFinished(),
       finishDate: null,
-      isSavedToServer: false
-    }
-  }
+      isSavedToServer: false,
+    };
+  };
 
   const startTraining = () => {
     initiateTraining();
-  }
+  };
 
   const startTrainingByDate = (date: Date) => {
     setSelectedDate(date);
     initiateTraining(false, date);
-  }
+  };
 
   const todayTraining = computed(() => {
     const date = getKeyFromDateForRecord(new Date());
@@ -84,33 +84,33 @@ export const useTrainingStore = defineStore('training', () => {
   });
 
   const addExercise = () => {
-    if (!selectedDayTraining.value) {return;}
+    if (!selectedDayTraining.value) { return; }
 
-    selectedDayTraining.value.exercises.push({...exerciseInitial});
-  }
+    selectedDayTraining.value.exercises.push({ ...exerciseInitial });
+  };
 
   const canAddExercise = computed(() => {
-    if (!selectedDayTraining.value) {return true;}
+    if (!selectedDayTraining.value) { return true; }
 
-    const exercises = selectedDayTraining.value.exercises;
+    const { exercises } = selectedDayTraining.value;
 
-    if (exercises.length === 0) {return true;}
+    if (exercises.length === 0) { return true; }
 
-    if (!exercises[exercises.length - 1]?.name) {return false;}
+    if (!exercises[exercises.length - 1]?.name) { return false; }
 
-    return true
+    return true;
   });
 
   const setExerciseName = (name: string, exerciseIndex: number) => {
-    if (!selectedDayTraining.value) {return;}
+    if (!selectedDayTraining.value) { return; }
 
     const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
 
     currentExercise.name = name;
-  }
+  };
 
   const addApproach = (exerciseIndex: number) => {
-    if (!selectedDayTraining.value) {return;}
+    if (!selectedDayTraining.value) { return; }
 
     const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
 
@@ -121,59 +121,57 @@ export const useTrainingStore = defineStore('training', () => {
           ...approachInitial,
           ...currentExercise.approaches[currentExercise.approaches.length - 1],
           id: newId,
-        }
+        },
       );
     } else {
-      currentExercise.approaches.push({...approachInitial, id: newId});
+      currentExercise.approaches.push({ ...approachInitial, id: newId });
     }
-  }
+  };
 
   const setApproach = ({ approachIndex, exerciseIndex, approach }: SetApproachModel) => {
-    if (!selectedDayTraining.value) {return;}
+    if (!selectedDayTraining.value) { return; }
 
     const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
-    if (!currentExercise) {return;}
+    if (!currentExercise) { return; }
 
     const currentApproach = currentExercise.approaches[approachIndex];
-    if (!currentApproach) {return;}
+    if (!currentApproach) { return; }
 
     currentExercise.approaches[approachIndex] = approach;
-  }
+  };
 
-  const deleteApproach = ({ exerciseIndex, approachIndex }: DeteleApproachModel) => {
-    if (!selectedDayTraining.value) {return;}
+  const deleteApproach = ({ exerciseIndex, approachIndex }: DeleteApproachModel) => {
+    if (!selectedDayTraining.value) { return; }
 
     const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
-    if (!currentExercise) {return;}
+    if (!currentExercise) { return; }
 
     currentExercise.approaches.splice(approachIndex, 1);
-  }
+  };
 
   const finishExercise = () => {
-    if (!todayTraining.value) {return;}
+    if (!todayTraining.value) { return; }
     todayTraining.value.isFinished = true;
     router.push({ name: 'home' });
-  }
+  };
 
-  const getTrainingByDate = (date: Date) => {
-    return trainings.value[getKeyFromDateForRecord(date)];
-  }
+  const getTrainingByDate = (date: Date) => trainings.value[getKeyFromDateForRecord(date)];
 
   const copyTraining = (date: Date) => {
     const training = getTrainingByDate(date);
     if (training) {
       trainings.value[getKeyFromDateForRecord(new Date())] = undefined;
-      
+
       startTraining();
 
-      training.exercises.forEach(({name}, i) => {
+      training.exercises.forEach(({ name }, i) => {
         if (i !== 0) {
           addExercise();
         }
         setExerciseName(name, i);
-      })
+      });
     }
-  }
+  };
 
   return {
     startTraining,
@@ -189,6 +187,6 @@ export const useTrainingStore = defineStore('training', () => {
     getTrainingByDate,
     setSelectedDate,
     startTrainingByDate,
-    copyTraining
-  }
+    copyTraining,
+  };
 });

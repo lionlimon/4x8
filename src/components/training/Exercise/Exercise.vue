@@ -1,6 +1,10 @@
 <template>
   <div class="exercise">
-    <input v-model="name" placeholder="Введите название упражнения" type="text" class="exercise__name">
+    <input
+      v-model="name"
+      placeholder="Введите название упражнения"
+      type="text"
+      class="exercise__name">
 
     <ul class="exercise__approaches">
       <TransitionGroup name="fade">
@@ -25,11 +29,11 @@
 </template>
 
 <script setup lang="ts">
-import {TrainingExerciseModel, TrainingApproachModel} from "@/stores/training";
-import {VButton} from "@ui/VButton";
-import {VIcon} from "@ui/VIcon";
-import {ref, watch} from "vue";
-import { ExerciseApproach } from "./ExerciseApproach";
+import { VButton } from '@ui/VButton';
+import { VIcon } from '@ui/VIcon';
+import { ref, watch } from 'vue';
+import { TrainingExerciseModel, TrainingApproachModel } from '@/stores/training';
+import { ExerciseApproach } from './ExerciseApproach';
 
 type Emits = {
   (e: 'add-approach-click'): void,

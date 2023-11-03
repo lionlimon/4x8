@@ -1,5 +1,5 @@
 <template>
-  <div class="input-range">
+  <label class="input-range">
     <input
       ref="input"
       :max="max"
@@ -13,7 +13,7 @@
     <div ref="label" class="input-range__label">
       {{ modelValue }}
     </div>
-  </div>
+  </label>
 </template>
 
 <script lang="ts" setup>
@@ -25,18 +25,16 @@ const emit = defineEmits<IRangeEmits>();
 const props = withDefaults(defineProps<IRangeProps>(), {
   min: 0,
   max: 100,
-  modelValue: 50
+  modelValue: 50,
 });
 
 const input = ref<HTMLInputElement | null>(null);
 const label = ref<HTMLDivElement | null>(null);
 
-const getPercent = () => {
-  return (Number(props.modelValue) / (props.max - props.min)) * 100;
-};
+const getPercent = () => (Number(props.modelValue) / (props.max - props.min)) * 100;
 
 const handleInput = (e: Event) => {
-  const value = (e.target as HTMLInputElement).value;
+  const { value } = (e.target as HTMLInputElement);
   emit('update:modelValue', value);
 };
 

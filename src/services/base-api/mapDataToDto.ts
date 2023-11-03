@@ -1,6 +1,6 @@
-import {RequestParameters} from "./types";
+import { RequestParameters } from './types';
 
 export const mapDataToDto = (data: RequestParameters['data']) => ({
   ...data,
-  page_size: data?.pageSize
-})
+  page_size: data?.pageSize,
+});

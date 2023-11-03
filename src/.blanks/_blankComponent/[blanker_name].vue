@@ -6,11 +6,11 @@
 
 <script setup lang="ts">
 type Emits = {};
+type Props = {};
+
 const emit = defineEmits<Emits>();
 
-const props = defineProps<{
-
-}>();
+const props = defineProps<Props>();
 </script>
 
 <style scoped lang="scss" src="./[blanker_name].scss"></style>

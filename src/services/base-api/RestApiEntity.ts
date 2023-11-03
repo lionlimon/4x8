@@ -9,7 +9,7 @@ export class RestApiEntity extends ApiEntity {
    * Создаёт новую сущность
    */
   async create<
-    R
+    R,
   >(data = {} as Record<string, unknown>) {
     return this.http<R>({
       method: 'POST',
@@ -21,7 +21,7 @@ export class RestApiEntity extends ApiEntity {
    * Получает сущность по id
    */
   async getOne<
-    R
+    R,
   >({ id }: { id: string | number, [key: string]: unknown }) {
     return this.http<R>({ url: `/${id}` });
   }
@@ -30,14 +30,14 @@ export class RestApiEntity extends ApiEntity {
    * Получвет все эксемпляры сущности
    */
   async getList<
-    R
+    R,
   >(data?: unknown) {
     return this.http<R>({ });
   }
 
   async update<
-    R
-  >({ data = {}, id } = {} as { data: Record<string, unknown>, id: string | number}) {
+    R,
+  >({ data = {}, id } = {} as { data: Record<string, unknown>, id: string | number }) {
     return this.http<R>(
       {
         method: 'PUT',
@@ -51,7 +51,7 @@ export class RestApiEntity extends ApiEntity {
    * Удаляет сущность по id
    */
   async delete<
-    R = Record<string, unknown>
+    R = Record<string, unknown>,
   >(id: string | number) {
     return this.http<R>(
       {

@@ -1,8 +1,8 @@
 <template>
   <div class="top-bar container">
-    <router-link v-if="backLink" class="top-bar__back" :to="backLink">
+    <RouterLink v-if="backLink" class="top-bar__back" :to="backLink">
       <VIcon name="arrow-left" width="24px" height="24px" />
-    </router-link>
+    </RouterLink>
 
     <div class="top-bar__info">
       <h1 class="top-bar__screen-title">
@@ -17,9 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import { VIcon } from '@/components/ui/VIcon';
 import type { PropType } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
+import { VIcon } from '@/components/ui/VIcon';
 
 type Emits = {};
 defineEmits<Emits>();
@@ -27,18 +27,18 @@ defineEmits<Emits>();
 defineProps({
   screenTitle: {
     type: String,
-    default: ''
+    default: '',
   },
 
   title: {
     type: String,
-    default: ''
+    default: '',
   },
 
   backLink: {
     type: [Object, String] as PropType<RouteLocationRaw>,
-    default: null
-  }
+    default: null,
+  },
 });
 </script>
 

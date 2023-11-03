@@ -5,8 +5,8 @@
         {{ index + 1 }} подход
       </div>
 
-      <button class="exercise-approach__delete" @click="emit('delete-click', index)">
-        <VIcon name="trash" width="18" height="18"/>
+      <button type="button" class="exercise-approach__delete" @click="emit('delete-click', index)">
+        <VIcon name="trash" width="18" height="18" />
       </button>
     </div>
 
@@ -17,18 +17,22 @@
       </div>
       <div class="exercise-approach__actions-group">
         <div class="exercise-approach__actions-title">Вес</div>
-        <VMiniInput ref="input" inputmode="numeric" type="number" v-model="approachForm.weight" />
+        <VMiniInput
+          ref="input"
+          inputmode="numeric"
+          type="number"
+          v-model="approachForm.weight" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { TrainingApproachModel } from "@/stores/training";
-import { VIcon } from "@ui/VIcon";
-import {reactive, watch, ref, onMounted} from "vue";
-import { VCounter } from "@ui/VCounter";
-import { VMiniInput } from "@ui/VMiniInput";
+import { VIcon } from '@ui/VIcon';
+import { reactive, watch, ref } from 'vue';
+import { VCounter } from '@ui/VCounter';
+import { VMiniInput } from '@ui/VMiniInput';
+import { TrainingApproachModel } from '@/stores/training';
 
 type Emits = {
   (e: 'delete-click', index: number): void,
@@ -41,8 +45,8 @@ const props = defineProps<{
   index: number
 }>();
 
-const approachForm = reactive({...props.approach});
-watch(approachForm, () => emit('update-approach', {...approachForm}));
+const approachForm = reactive({ ...props.approach });
+watch(approachForm, () => emit('update-approach', { ...approachForm }));
 
 const input = ref<InstanceType<typeof VMiniInput>>();
 </script>

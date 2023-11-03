@@ -1,5 +1,5 @@
 <template>
-  <div :class="['progress', {'progress--small': small}]" :style="{ '--segment-count': segmentsCount }">
+  <div :class="['progress', { 'progress--small': small }]" :style="{ '--segment-count': segmentsCount }">
     <div class="progress__number">
       {{ degree }}
     </div>
@@ -16,27 +16,28 @@
 import { computed } from 'vue';
 
 export default {
-  name: 'v-progress-circle',
+  name: 'VProgressCircle',
   props: {
     degree: {
       type: [Number, String],
-      required: true
+      required: true,
     },
     segmentsCount: {
       type: Number,
       required: false,
-      default: 20
+      default: 20,
     },
     small: Boolean,
   },
   setup(props) {
-    const percent = computed(() => (props.segmentsCount * ((Number(props.degree) / 360) * 100)) / 100);
+    const percent = computed(() => (
+      props.segmentsCount * ((Number(props.degree) / 360) * 100)) / 100);
 
     return {
-      percent
+      percent,
     };
-  }
+  },
 };
 </script>
 
-<style lang="scss" src="./v-progress-circle.scss" scoped/>
+<style lang="scss" src="./v-progress-circle.scss" scoped />

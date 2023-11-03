@@ -3,12 +3,12 @@ export type TrainingApproachModel = {
   weight: number,
   weightUnit: string,
   id: string
-}
+};
 
 export type TrainingExerciseModel = {
   name: string,
   approaches: TrainingApproachModel[],
-}
+};
 
 export type TrainingModel = {
   isFinished: boolean,
@@ -18,12 +18,20 @@ export type TrainingModel = {
   // ISO date
   date: string,
   exercises: TrainingExerciseModel[],
-}
+};
 
 /**
  * key - ISO date
  */
-export type TrainingRecord = Record<string, TrainingModel | undefined>
+export type TrainingRecord = Record<string, TrainingModel | undefined>;
 
-export type SetApproachModel = { approach: TrainingApproachModel, approachIndex: number, exerciseIndex: number };
-export type DeteleApproachModel = { approachIndex: number, exerciseIndex: number };
+export type SetApproachModel = {
+  approach: TrainingApproachModel,
+  approachIndex: number,
+  exerciseIndex: number
+};
+
+export type DeleteApproachModel = {
+  approachIndex: number,
+  exerciseIndex: number
+};

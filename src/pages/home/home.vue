@@ -1,7 +1,7 @@
 <template>
-  <BaseLayout class="home">
+  <ScreenLayout class="home">
     <template #header>
-      <HomeTopBar />
+      <HomeTopBar class="layout-header" />
     </template>
 
     <VCalendar
@@ -19,29 +19,22 @@
     >
       <DayInfoPopup :date="selectedDate" />
     </VModal>
-
-    <template #footer>
-      <MainFooter>
-        <VButton :to="{ name: 'training', query: { mode: 'new-training' } }" size="m" wide>
-          {{ footerButton }}
-        </VButton>
-      </MainFooter>
-    </template>
-  </BaseLayout>
+  </ScreenLayout>
 </template>
 
 <script setup lang="ts">
+import { VCalendar } from '@ui/VCalendar';
+import { VButton } from '@ui/VButton';
+import { computed, ref } from 'vue';
+import { VModal } from '@ui/VModal';
 import { BaseLayout } from '@/layouts/BaseLayout';
-import { HomeTopBar } from "@/components/home";
-import { VCalendar } from "@ui/VCalendar";
-import { useCalendarStore } from "@/stores/calendar";
-import {MainFooter} from "@/components/general/MainFooter";
-import {VButton} from "@ui/VButton";
-import {useTrainingStore} from "@/stores/training";
-import {computed, ref} from "vue";
-import { VModal } from "@ui/VModal";
-import { DayInfoPopup } from "@/components/general/DayInfoPopup";
-import {formatDate} from "@/helpers/formatDate";
+import { HomeTopBar } from '@/components/home';
+import { useCalendarStore } from '@/stores/calendar';
+import { MainFooter } from '@/components/general/MainFooter';
+import { useTrainingStore } from '@/stores/training';
+import { DayInfoPopup } from '@/components/general/DayInfoPopup';
+import { formatDate } from '@/helpers/formatDate';
+import ScreenLayout from '@/layouts/ScreenLayout/ScreenLayout.vue';
 
 const calendarStore = useCalendarStore();
 const trainingStore = useTrainingStore();
@@ -64,11 +57,9 @@ const selectedDate = ref<Date>(new Date());
 const onDayClick = async (date: Date) => {
   bottomSheet.value?.open();
   selectedDate.value = date;
-}
+};
 
-const isTrainingDayChecker = (date: Date) => {
-  return !!trainingStore.getTrainingByDate(date);
-}
+const isTrainingDayChecker = (date: Date) => !!trainingStore.getTrainingByDate(date);
 </script>
 
 <style scoped lang="scss" src="./home.scss"></style>

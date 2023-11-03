@@ -12,41 +12,41 @@
       </div>
 
       <div class="section-item">
-        <v-button size="m"> Кнопка по больше</v-button>
+        <VButton size="m"> Кнопка по больше</VButton>
       </div>
 
       <div class="section-item">
-        <v-button loading>Загрузка</v-button>
+        <VButton loading>Загрузка</VButton>
       </div>
 
       <div class="section-item">
-        <v-button>
-          <v-icon name="cart" />
-        </v-button>
+        <VButton>
+          <VIcon name="cart" />
+        </VButton>
       </div>
 
       <div class="section-item">
-        <v-button :to="{ query: { hi: 1 } }"> Ссылка в виде кнопки</v-button>
+        <VButton :to="{ query: { hi: 1 } }"> Ссылка в виде кнопки</VButton>
       </div>
 
       <div class="section-item">
-        <v-card>
+        <VCard>
           <div>
             <strong>Карточка для фона</strong>
 
-            <v-link> Кнопка в виде ссылки</v-link>
+            <VLink> Кнопка в виде ссылки</VLink>
           </div>
-        </v-card>
+        </VCard>
       </div>
 
       <div class="section-item">
-        <v-card>
+        <VCard>
           <div>
             <strong>Карточка для фона</strong>
 
-            <v-link :to="{ query: { hi: 1 } }"> Ссылка в виде ссылки</v-link>
+            <VLink :to="{ query: { hi: 1 } }"> Ссылка в виде ссылки</VLink>
           </div>
-        </v-card>
+        </VCard>
       </div>
     </div>
 
@@ -54,11 +54,11 @@
       <h3>Cчётчики</h3>
 
       <div class="section-item">
-        <v-counter />
+        <VCounter />
       </div>
 
       <div class="section-item">
-        <v-counter theme="violet" />
+        <VCounter theme="violet" />
       </div>
     </div>
 
@@ -66,17 +66,17 @@
       <h3>Карточка</h3>
 
       <div class="section-item">
-        <v-card>
+        <VCard>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet beatae doloribus eos ex
           repellendus sit vitae? Accusamus animi assumenda beatae consectetur corporis cupiditate
           eos est eum exercitationem expedita explicabo illo illum laboriosam libero natus, nemo
           nesciunt nostrum placeat porro unde. A consequatur, deserunt. Doloremque dolores eaque
           impedit officia vero.
-        </v-card>
+        </VCard>
       </div>
 
       <div class="section-item">
-        <v-card>
+        <VCard>
           <template #header>Заголовок</template>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet beatae doloribus eos ex
           repellendus sit vitae? Accusamus animi assumenda beatae consectetur corporis cupiditate
@@ -84,12 +84,12 @@
           nesciunt nostrum placeat porro unde. A consequatur, deserunt. Doloremque dolores eaque
           impedit officia vero.
 
-          <v-card-delimiter />
+          <VCardDelimiter />
           Разделитель
 
-          <v-card-delimiter />
+          <VCardDelimiter />
           Ещё разделитель
-        </v-card>
+        </VCard>
       </div>
     </div>
 
@@ -97,7 +97,7 @@
       <h3>Модальное окно</h3>
 
       <div class="section-item">
-        <v-button @click="() => bottomSheet?.open()">Тыкай</v-button>
+        <VButton @click="() => bottomSheet?.open()">Тыкай</VButton>
       </div>
 
       <VModal ref="bottomSheet" title="Ушлёпок">
@@ -113,13 +113,13 @@
       <h3>Шэлбики</h3>
 
       <div class="section-item">
-        <v-label>Шелбик</v-label>
+        <VLabel>Шелбик</VLabel>
       </div>
       <div class="section-item">
-        <v-label>
-          <v-icon height="14" name="cashback" width="14" />
+        <VLabel>
+          <VIcon height="14" name="cashback" width="14" />
           Кешбек
-        </v-label>
+        </VLabel>
       </div>
     </div>
 
@@ -127,33 +127,37 @@
       <h3>Инпуты</h3>
 
       <div class="section-item">
-        <v-range v-model="range" :max="1260" />
+        <VRange v-model="range" :max="1260" />
       </div>
 
       <div class="section-item">
-        <v-control>
-          <v-input v-model="input" label="Имя матери" />
-        </v-control>
+        <VControl>
+          <VInput v-model="input" label="Имя матери" />
+        </VControl>
       </div>
 
       <div class="section-item">
-        <v-control error="Не верно">
-          <v-input v-model="input" label="Имя матери" />
-        </v-control>
+        <VControl error="Не верно">
+          <VInput v-model="input" label="Имя матери" />
+        </VControl>
         <br />
       </div>
 
       <div class="section-item">
-        <v-control text="Ты молодец">
-          <v-input v-model="input" label="Имя матери" />
-        </v-control>
+        <VControl text="Ты молодец">
+          <VInput v-model="input" label="Имя матери" />
+        </VControl>
         <br />
       </div>
 
       <div class="section-item">
-        <v-control>
-          <v-input v-model="input2" digits label="Введи 3 цифры CVV" mask="###" />
-        </v-control>
+        <VControl>
+          <VInput
+            v-model="input2"
+            digits
+            label="Введи 3 цифры CVV"
+            mask="###" />
+        </VControl>
         <br />
       </div>
     </div>
@@ -161,9 +165,6 @@
 </template>
 
 <script lang="ts" setup>
-import { VButton } from '@/components/ui/VButton';
-import { VIcon } from '@/components/ui/VIcon';
-import { VCounter } from '@/components/ui/VCounter';
 import { VCard, VCardDelimiter } from '@ui/v-card/';
 import { ref } from 'vue';
 import { VModal } from '@ui/VModal/';
@@ -172,8 +173,11 @@ import { VRange } from '@ui/v-range';
 import { VInput } from '@ui/v-input';
 import { VControl } from '@ui/v-control';
 import { VLink } from '@ui/v-link';
+import { VCounter } from '@/components/ui/VCounter';
+import { VIcon } from '@/components/ui/VIcon';
+import { VButton } from '@/components/ui/VButton';
 
-const bottomSheet = ref<{open(): void}>()
+const bottomSheet = ref<{ open(): void }>();
 const range = ref(0);
 const input = ref('');
 const input2 = ref('');

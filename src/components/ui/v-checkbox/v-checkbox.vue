@@ -14,7 +14,7 @@
         type="checkbox"
       />
       <span class="checkbox__check">
-        <v-icon height="12px" name="check" width="12px" />
+        <VIcon height="12px" name="check" width="12px" />
       </span>
     </span>
     <slot />
@@ -28,7 +28,7 @@ import { ICheckboxEmits, ICheckboxProps } from '@ui/v-checkbox/types';
 import { useVModel } from '@vueuse/core/index';
 
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 const emit = defineEmits<ICheckboxEmits>();
@@ -37,14 +37,14 @@ const props = withDefaults(defineProps<ICheckboxProps>(), {
   disabled: false,
   falseValue: false,
   trueValue: true,
-  value: ''
+  value: '',
 });
 
 const computedValue = useVModel(props, 'modelValue', emit);
 
 const uid = computed(() => {
-  let instance = getCurrentInstance();
-  return 'checkbox-' + instance?.uid;
+  const instance = getCurrentInstance();
+  return `checkbox-${instance?.uid}`;
 });
 </script>
 

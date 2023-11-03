@@ -1,11 +1,9 @@
 .base-layout {
   position: relative;
-  height: 100vh;
-  height: 100dvh;
-  overflow: auto;
-  display: grid;
-  align-items: start;
-  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  min-height: 100lvh;
+  display: flex;
+  flex-direction: column;
 
   &__header,
   &__footer {
@@ -29,11 +27,8 @@
   }
 
   &__content {
-    flex-shrink: 1;
-    padding-bottom: 16px;
     height: 100%;
-    overflow: auto;
-    @include scrollbar;
+    padding-bottom: 16px;
   }
 
   &--no-scroll &__content {

@@ -14,10 +14,12 @@
 </template>
 
 <script setup lang="ts">
-import {inject, reactive, ref, useAttrs} from "vue";
-import { hasErrorSymbol } from "@ui/v-control";
-import {useInputAutofillStatus} from "./useInputAutofillStatus";
-import {useVModel} from "@vueuse/core";
+import {
+  inject, reactive, ref, useAttrs,
+} from 'vue';
+import { hasErrorSymbol } from '@ui/v-control';
+import { useVModel } from '@vueuse/core';
+import { useInputAutofillStatus } from './useInputAutofillStatus';
 
 defineOptions({ inheritAttrs: false });
 
@@ -37,13 +39,14 @@ type Props = {
 const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
   mask: '',
+  label: '',
 });
 
 const attrs = useAttrs();
 
 const options = reactive({
   mask: props.mask,
-  eager: true
+  eager: true,
 });
 
 const { onAnimationStart, isAutofilled } = useInputAutofillStatus();
@@ -53,13 +56,13 @@ const isFocused = ref(false);
 const inputValue = useVModel(props, 'modelValue', emit);
 
 const onBlur = () => {
-  isFocused.value = false
+  isFocused.value = false;
   emit('blur');
-}
+};
 
 const onFocus = () => {
   isFocused.value = true;
-}
+};
 
 const hasError = inject(hasErrorSymbol);
 

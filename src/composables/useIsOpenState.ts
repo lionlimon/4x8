@@ -10,6 +10,6 @@ export const useIsOpenState = (initialValue: boolean = false) => {
     isOpen: isOpened,
     open,
     close,
-    toggle
+    toggle,
   };
 };

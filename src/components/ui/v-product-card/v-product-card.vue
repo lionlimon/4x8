@@ -2,13 +2,13 @@
   <div class="product-card">
     <div class="product-card__img-wrap">
       <img class="product-card__img" :src="product.imageUrl ?? fallbackImage" alt="" />
-      <v-label v-if="product.cashback" class="product-card__cashback">
-        <v-icon width="14" height="14" name="cashback" />
+      <VLabel v-if="product.cashback" class="product-card__cashback">
+        <VIcon width="14" height="14" name="cashback" />
         {{ product.cashback }} %
-      </v-label>
+      </VLabel>
     </div>
 
-    <v-card class="product-card__info">
+    <VCard class="product-card__info">
       <h3 class="product-card__title">
         <span class="product-card__title-inner">
           {{ product.title }}
@@ -16,7 +16,7 @@
       </h3>
       <p class="product-card__size">{{ product.servingSize }}</p>
       <p v-if="product.label" :class="['product-card__label', labelClasses(product.label.color)]">
-        <v-icon :name="product.label.icon" width="18" height="18" />
+        <VIcon :name="product.label.icon" width="18" height="18" />
         {{ product.label.text }}
       </p>
 
@@ -24,29 +24,34 @@
         <p class="product-card__price">
           {{ formatPrice(product.price) }}
         </p>
-        <transition mode="out-in" name="fade">
-          <v-button v-if="!isAdded" size="s" theme="white" wide @click="emit('add-to-cart')">
+        <Transition mode="out-in" name="fade">
+          <VButton
+            v-if="!isAdded"
+            size="s"
+            theme="white"
+            wide
+            @click="emit('add-to-cart')">
             В заказ
-            <v-icon name="cart" />
-          </v-button>
+            <VIcon name="cart" />
+          </VButton>
 
-          <v-counter v-model="count" theme="violet" v-else />
-        </transition>
+          <VCounter v-model="count" theme="violet" v-else />
+        </Transition>
       </div>
-    </v-card>
+    </VCard>
   </div>
 </template>
 
 <script setup lang="ts">
 import { VCard } from '@ui/v-card';
 import type { PropType } from 'vue';
-import { formatPrice } from '@/helpers/formatPrice';
-import fallbackImage from '@/assets/img/image-fallback.svg';
 import { VIcon } from 'src/components/ui/VIcon';
 import { VButton } from 'src/components/ui/VButton';
 import { VCounter } from 'src/components/ui/VCounter';
 import { ref, watch } from 'vue';
 import { VLabel } from '@ui/v-lable';
+import fallbackImage from '@/assets/img/image-fallback.svg';
+import { formatPrice } from '@/helpers/formatPrice';
 
 type Emits = {
   (e: 'add-to-cart'): void;
@@ -58,18 +63,18 @@ const emit = defineEmits<Emits>();
 const props = defineProps({
   product: {
     type: Object as PropType<CatalogModel>,
-    required: true
+    required: true,
   },
 
   isAdded: {
     type: Boolean,
-    default: false
+    default: false,
   },
 
   currentCount: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 });
 
 const count = ref(0);
@@ -79,7 +84,7 @@ watch(
     if (value !== oldValue) {
       emit('update-count', count.value);
     }
-  }
+  },
 );
 watch(
   () => props.currentCount,
@@ -88,7 +93,7 @@ watch(
       count.value = value as number;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 const labelClasses = (color: string) => `c-${color}`;
