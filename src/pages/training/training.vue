@@ -3,11 +3,11 @@
     <template #header>
       <TopBar :title="currentDate" screen-title="Тренировка" />
     </template>
-    <ul class="training__exercises" v-if="currentTraining">
+    <ul class="training__exercises" v-if="trainingStore.selectedDayTraining">
       <TransitionGroup name="fade">
         <li
           class="training__exercise"
-          v-for="(exercise, i) in currentTraining.exercises"
+          v-for="(exercise, i) in trainingStore.selectedDayTraining.exercises"
           :key="i"
         >
           <Exercise
@@ -28,17 +28,32 @@
       </TransitionGroup>
     </ul>
 
-    <VButton
-      :disabled="!trainingStore.canAddExercise"
-      variant="outline"
-      size="m"
-      wide
-      @click="trainingStore.addExercise()"
-    >
-      <VIcon name="plus" />
-      Добавить упражнение
-    </VButton>
-    <VButton size="m" wide @click="onSaveClick">{{ saveButtonText }}</VButton>
+    <p class="training__empty" v-else>Сегодня ещё не было занатий</p>
+
+    <template #footer>
+      <div class="container">
+        <VButton
+          v-if="trainingStore.selectedDayTraining"
+          :disabled="!trainingStore.canAddExercise"
+          variant="outline"
+          size="m"
+          wide
+          @click="trainingStore.addExercise()"
+        >
+          <VIcon name="plus" />
+          Добавить упражнение
+        </VButton>
+
+        <VButton
+          v-else
+          size="m"
+          wide
+          @click="trainingStore.startTraining()"
+        >
+          Начать тренировку
+        </VButton>
+      </div>
+    </template>
   </ScreenLayout>
 </template>
 
@@ -46,18 +61,19 @@
 import { computed } from 'vue';
 import { VButton } from '@ui/VButton';
 import { VIcon } from '@ui/VIcon/';
-import { useRoute, useRouter } from 'vue-router';
-import { BaseLayout } from '@/layouts/BaseLayout';
+import { useRoute } from 'vue-router';
 import { TopBar } from '@/components/general/TopBar/';
 import { formatDate } from '@/helpers/formatDate';
 import { Exercise } from '@/components/training';
-import { MainFooter } from '@/components/general/MainFooter/';
 import { useTrainingStore } from '@/stores/training';
 import ScreenLayout from '@/layouts/ScreenLayout/ScreenLayout.vue';
 
 const route = useRoute();
-const router = useRouter();
 const trainingStore = useTrainingStore();
+
+trainingStore.setSelectedDate(
+  route.query.date ? new Date(route.query.date as string) : new Date(),
+);
 
 const currentDate = computed(() => {
   if (route.query.date) {
@@ -66,18 +82,6 @@ const currentDate = computed(() => {
   return formatDate(new Date());
 });
 
-const currentTraining = computed(() => {
-  if (route.query.date) {
-    return trainingStore.getTrainingByDate(new Date(route.query.date as string));
-  }
-
-  return trainingStore.todayTraining;
-});
-
-if (!trainingStore.todayTraining && route.query.mode === 'new-training') {
-  trainingStore.startTraining();
-}
-
 if (route.query.date) {
   trainingStore.startTrainingByDate(new Date(route.query.date as string));
 }
@@ -85,19 +89,6 @@ if (route.query.date) {
 const onExerciseNameChange = (name: string, exerciseIndex: number) => {
   trainingStore.setExerciseName(name, exerciseIndex);
 };
-
-const onSaveClick = () => {
-  if (route.query.mode === 'new-training') {
-    trainingStore.finishExercise();
-  }
-
-  router.push({ name: 'home' });
-};
-
-const saveButtonText = computed(() => {
-  if (route.query.mode === 'new-training' && !trainingStore.todayTraining?.isFinished) { return 'Завершить'; }
-  return 'Сохранить';
-});
 </script>
 
 <style scoped lang="scss" src="./training.scss"></style>

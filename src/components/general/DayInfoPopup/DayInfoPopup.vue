@@ -1,7 +1,7 @@
 <template>
   <div class="day-info-popup">
     <ul v-if="date && trainingStore.getTrainingByDate(date)" class="day-info-popup__list">
-      <li v-for="exercise in trainingStore.getTrainingByDate(date).exercises" :key="exercise.name" class="day-info-popup__item">
+      <li v-for="exercise in trainingStore.getTrainingByDate(date)?.exercises" :key="exercise.name" class="day-info-popup__item">
         <div class="day-info-popup__exercise-title">{{ exercise.name }}</div>
 
         <ul v-if="exercise.approaches" class="day-info-popup__approaches-list">
@@ -27,9 +27,10 @@
         v-if="showCopyButton"
         wide
         size="m"
+        variant="outline"
         @click="onCopyClick"
       >
-        Скопировать этот план
+        Повторить этот план
       </VButton>
     </div>
   </div>
@@ -42,7 +43,7 @@ import { useRouter } from 'vue-router';
 import { useTrainingStore } from '@/stores/training';
 
 const props = defineProps<{
-  date: Date | null
+  date: Date
 }>();
 
 const router = useRouter();

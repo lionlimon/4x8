@@ -11,4 +11,10 @@
     flex-direction: column;
     margin-top: 20px;
   }
+
+  &__empty {
+    text-align: center;
+    margin-top: 30px;
+    color: rgb(var(--secondary-text));
+  }
 }

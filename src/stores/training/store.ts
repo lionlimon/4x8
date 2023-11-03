@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import { computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useTrainingSettingsStore } from '@/stores/training-settings';
+import { weightUnits } from '@/constants/weightUnits';
 import {
   TrainingRecord,
   SetApproachModel,
@@ -11,8 +12,8 @@ import {
 } from './types';
 
 export const useTrainingStore = defineStore('training', () => {
+  const trainingSettingsStore = useTrainingSettingsStore();
   const trainings = useStorage<TrainingRecord>('training-record', {});
-  const router = useRouter();
   const selectedDayDate = ref(new Date());
 
   const getKeyFromDateForRecord = (date: Date) => {
@@ -30,85 +31,20 @@ export const useTrainingStore = defineStore('training', () => {
   const setSelectedDate = (date: Date) => selectedDayDate.value = date;
 
   const approachInitial: TrainingApproachModel = {
-    reps: 1,
-    weight: 1,
-    weightUnit: 'кг',
+    reps: 0,
+    weight: 0,
+    weightUnit: weightUnits[trainingSettingsStore.settings.weightUnit],
     id: new Date().toISOString(),
   };
 
   const exerciseInitial: TrainingExerciseModel = {
     name: '',
-    approaches: [{ ...approachInitial, id: new Date().toISOString() }],
+    approaches: [],
   };
 
-  const initiateTraining = (isToday = true, trainingDate = new Date()) => {
-    const date = trainingDate.toISOString();
-
-    const dateForKeyISO = getKeyFromDateForRecord(trainingDate);
-
-    if (trainings.value[dateForKeyISO]) {
-      return;
-    }
-
-    const checkIsFinished = () => {
-      const nowDate = new Date();
-      const selectedDate = new Date(trainingDate);
-
-      nowDate.setHours(0, 0, 0, 0);
-      selectedDate.setHours(0, 0, 0, 0);
-
-      return Number(selectedDate) < Number(nowDate);
-    };
-
-    trainings.value[dateForKeyISO] = {
-      date,
-      exercises: [{ ...exerciseInitial }],
-      isFinished: isToday ? false : checkIsFinished(),
-      finishDate: null,
-      isSavedToServer: false,
-    };
-  };
-
-  const startTraining = () => {
-    initiateTraining();
-  };
-
-  const startTrainingByDate = (date: Date) => {
-    setSelectedDate(date);
-    initiateTraining(false, date);
-  };
-
-  const todayTraining = computed(() => {
-    const date = getKeyFromDateForRecord(new Date());
-    return trainings.value[date];
-  });
-
-  const addExercise = () => {
-    if (!selectedDayTraining.value) { return; }
-
-    selectedDayTraining.value.exercises.push({ ...exerciseInitial });
-  };
-
-  const canAddExercise = computed(() => {
-    if (!selectedDayTraining.value) { return true; }
-
-    const { exercises } = selectedDayTraining.value;
-
-    if (exercises.length === 0) { return true; }
-
-    if (!exercises[exercises.length - 1]?.name) { return false; }
-
-    return true;
-  });
-
-  const setExerciseName = (name: string, exerciseIndex: number) => {
-    if (!selectedDayTraining.value) { return; }
-
-    const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
-
-    currentExercise.name = name;
-  };
-
+  /**
+   * Approach actions
+   */
   const addApproach = (exerciseIndex: number) => {
     if (!selectedDayTraining.value) { return; }
 
@@ -149,13 +85,66 @@ export const useTrainingStore = defineStore('training', () => {
     currentExercise.approaches.splice(approachIndex, 1);
   };
 
-  const finishExercise = () => {
-    if (!todayTraining.value) { return; }
-    todayTraining.value.isFinished = true;
-    router.push({ name: 'home' });
+  /**
+   * Exercise actions
+   */
+  const addExercise = () => {
+    if (!selectedDayTraining.value) { return; }
+
+    selectedDayTraining.value.exercises.push({ ...exerciseInitial });
+  };
+
+  const canAddExercise = computed(() => {
+    if (!selectedDayTraining.value) { return true; }
+
+    const { exercises } = selectedDayTraining.value;
+
+    if (exercises.length === 0) { return true; }
+
+    if (!exercises[exercises.length - 1]?.name) { return false; }
+
+    return true;
+  });
+
+  const setExerciseName = (name: string, exerciseIndex: number) => {
+    if (!selectedDayTraining.value) { return; }
+
+    const currentExercise = selectedDayTraining.value.exercises[exerciseIndex];
+
+    currentExercise.name = name;
+  };
+
+  /**
+   * Training actions
+   */
+  const initiateTraining = (trainingDate = new Date()) => {
+    const date = trainingDate.toISOString();
+
+    const dateForKeyISO = getKeyFromDateForRecord(trainingDate);
+
+    if (trainings.value[dateForKeyISO]) {
+      return;
+    }
+
+    trainings.value[dateForKeyISO] = {
+      date,
+      exercises: [{ ...exerciseInitial }],
+      isSavedToServer: false,
+    };
+  };
+
+  const startTraining = () => {
+    initiateTraining();
+  };
+
+  const startTrainingByDate = (date: Date) => {
+    setSelectedDate(date);
+    initiateTraining(date);
   };
 
   const getTrainingByDate = (date: Date) => trainings.value[getKeyFromDateForRecord(date)];
+
+  const deleteTraining = (date: Date) => delete trainings.value[getKeyFromDateForRecord(date)];
 
   const copyTraining = (date: Date) => {
     const training = getTrainingByDate(date);
@@ -176,17 +165,18 @@ export const useTrainingStore = defineStore('training', () => {
   return {
     startTraining,
     trainings,
-    todayTraining,
-    addExercise,
-    setExerciseName,
-    addApproach,
-    setApproach,
-    canAddExercise,
-    deleteApproach,
-    finishExercise,
-    getTrainingByDate,
     setSelectedDate,
+    selectedDayTraining,
+    deleteTraining,
+    getTrainingByDate,
     startTrainingByDate,
     copyTraining,
+    addExercise,
+    setExerciseName,
+    canAddExercise,
+    addApproach,
+    setApproach,
+    deleteApproach,
+    trainingSettingsStore,
   };
 });

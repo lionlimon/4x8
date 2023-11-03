@@ -2,10 +2,16 @@
   <div class="modal">
     <Sheet no-stretch only-header-swipe v-model:visible="isOpen">
       <div class="modal__header">
-        <h4 v-if="title" class="modal__title">
-          {{ title }}
-        </h4>
-        <p class="modal__sub-title" v-if="subTitle">{{ subTitle }}</p>
+        <div class="modal__header-info">
+          <h4 v-if="title" class="modal__title">
+            {{ title }}
+          </h4>
+          <p class="modal__sub-title" v-if="subTitle">{{ subTitle }}</p>
+        </div>
+
+        <div v-if="$slots.actions" class="modal__actions">
+          <slot name="actions" />
+        </div>
       </div>
       <div class="modal__inner">
         <slot />

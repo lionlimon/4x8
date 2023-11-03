@@ -46,11 +46,14 @@
     }
   }
 
-
   &--size-m {
     padding: 15px 20px;
     min-height: 50px;
     border-radius: 18px;
+  }
+
+  &--theme-dangerous {
+    --theme-main-color: var(--dangerous);
   }
 
   &--wide {

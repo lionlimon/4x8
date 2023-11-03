@@ -11,10 +11,7 @@ export type TrainingExerciseModel = {
 };
 
 export type TrainingModel = {
-  isFinished: boolean,
   isSavedToServer: boolean,
-  // ISO date
-  finishDate: string | null,
   // ISO date
   date: string,
   exercises: TrainingExerciseModel[],

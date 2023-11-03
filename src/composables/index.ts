@@ -1,4 +1,4 @@
 export { useSwipe } from './useSwipe';
-export { useIsOpenState } from './useIsOpenState';
+export { useIsOpenedState } from './useIsOpenedState';
 export { useRecaptchaToken } from './useRecaptchaToken';
 export { useBackTimer } from './useBackTimer';

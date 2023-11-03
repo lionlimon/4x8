@@ -17,41 +17,42 @@
       title="Тренировка"
       @on-close="selectedDate = new Date()"
     >
+      <template #actions>
+        <VIconAction
+          v-if="trainingStore.getTrainingByDate(selectedDate)"
+          theme="dangerous"
+          icon="trash"
+          @click="() => deletionBottomSheet?.open()"
+        />
+      </template>
       <DayInfoPopup :date="selectedDate" />
     </VModal>
+    <DeletionConfirmModal
+      ref="deletionBottomSheet"
+      text="Удалить упражнение?"
+      @confirm="onConfirmDeletion"
+    />
   </ScreenLayout>
 </template>
 
 <script setup lang="ts">
 import { VCalendar } from '@ui/VCalendar';
-import { VButton } from '@ui/VButton';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { VModal } from '@ui/VModal';
-import { BaseLayout } from '@/layouts/BaseLayout';
 import { HomeTopBar } from '@/components/home';
 import { useCalendarStore } from '@/stores/calendar';
-import { MainFooter } from '@/components/general/MainFooter';
 import { useTrainingStore } from '@/stores/training';
 import { DayInfoPopup } from '@/components/general/DayInfoPopup';
 import { formatDate } from '@/helpers/formatDate';
-import ScreenLayout from '@/layouts/ScreenLayout/ScreenLayout.vue';
+import { ScreenLayout } from '@/layouts/ScreenLayout';
+import { VIconAction } from '@ui/VIconAction';
+import { DeletionConfirmModal } from '@/components/general/DeletionConfirmModal';
 
 const calendarStore = useCalendarStore();
 const trainingStore = useTrainingStore();
 
-const footerButton = computed(() => {
-  if (trainingStore.todayTraining?.isFinished) {
-    return 'Изменить тренировку';
-  }
-
-  if (trainingStore.todayTraining) {
-    return 'К тренировке';
-  }
-
-  return 'Начать тренировку';
-});
-
 const bottomSheet = ref<InstanceType<typeof VModal>>();
+const deletionBottomSheet = ref<InstanceType<typeof DeletionConfirmModal>>();
 
 const selectedDate = ref<Date>(new Date());
 const onDayClick = async (date: Date) => {
@@ -59,6 +60,10 @@ const onDayClick = async (date: Date) => {
   selectedDate.value = date;
 };
 
+const onConfirmDeletion = () => {
+  trainingStore.deleteTraining(selectedDate.value);
+  bottomSheet.value?.close();
+};
 const isTrainingDayChecker = (date: Date) => !!trainingStore.getTrainingByDate(date);
 </script>
 

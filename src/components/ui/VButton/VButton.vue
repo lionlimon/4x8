@@ -13,6 +13,7 @@
 import { PropType } from 'vue';
 import { RouteLocationRaw } from 'vue-router';
 import { VPointLoader } from '@ui/VPointLoader';
+import { Variant, Size, Theme } from './types';
 
 const props = defineProps({
   to: {
@@ -24,12 +25,16 @@ const props = defineProps({
     default: null,
   },
   variant: {
-    type: String as PropType<'default' | 'outline'>,
+    type: String as PropType<Variant>,
     default: 'default',
   },
   size: {
-    type: String as PropType<'m' | 's'>,
+    type: String as PropType<Size>,
     default: 's',
+  },
+  theme: {
+    type: String as PropType<Theme>,
+    default: 'default',
   },
   wide: {
     type: Boolean,
@@ -39,7 +44,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-
   loading: {
     type: Boolean,
     default: false,
@@ -53,8 +57,9 @@ const component = () => {
 };
 
 const modifiers = () => ({
-  [`button--${props.variant}`]: props.variant,
-  [`button--size-${props.size}`]: props.size,
+  [`button--${props.variant}`]: props.variant !== 'default',
+  [`button--size-${props.size}`]: props.size !== 's',
+  [`button--theme-${props.theme}`]: props.theme !== 'default',
   'button--wide': props.wide,
   'button--loading': props.loading,
   'button--disabled': props.disabled,
