@@ -6,12 +6,24 @@
   gap: 8px;
 
   &__value {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     text-align: center;
     border-radius: var(--radius-main);
     border: 1px solid rgb(var(--black) / 10%);
     padding: 0;
+
+    /* Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    &[type=number] {
+      -moz-appearance: textfield;
+    }
 
     &:focus,
     &:focus-visible {
@@ -22,14 +34,14 @@
 
   &__increment,
   &__decrement {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: var(--radius-main);
-    background-color: rgb(var(--accent));
+    border: 1px solid rgb(var(--accent));
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgb(var(--white));
+    color: rgb(var(--accent));
 
     @include outline;
 

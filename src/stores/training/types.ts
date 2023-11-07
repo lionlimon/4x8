@@ -1,17 +1,21 @@
+import { WeightUnit } from '@/constants/weightUnits';
+
 export type TrainingApproachModel = {
   reps: number,
   weight: number,
-  weightUnit: string,
+  weightUnit: WeightUnit,
   id: string
 };
 
 export type TrainingExerciseModel = {
   name: string,
+  id: string,
   approaches: TrainingApproachModel[],
 };
 
 export type TrainingModel = {
   isSavedToServer: boolean,
+  basedOnTraining: string | null,
   // ISO date
   date: string,
   exercises: TrainingExerciseModel[],

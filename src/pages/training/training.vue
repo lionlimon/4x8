@@ -3,73 +3,64 @@
     <template #header>
       <TopBar :title="currentDate" screen-title="Тренировка" />
     </template>
-    <ul class="training__exercises" v-if="trainingStore.selectedDayTraining">
+    <ul class="training__exercises" v-if="trainingStore.selectedDayTraining?.exercises.length">
       <TransitionGroup name="fade">
         <li
           class="training__exercise"
           v-for="(exercise, i) in trainingStore.selectedDayTraining.exercises"
           :key="i"
         >
-          <Exercise
+          <ExerciseCart
+            can-edit
             :exercise="exercise"
-            @change-name="(name) => onExerciseNameChange(name, i)"
-            @add-approach-click="trainingStore.addApproach(i)"
-            @delete-approach-click="(approachIndex) => trainingStore.deleteApproach({
-              approachIndex,
-              exerciseIndex: i,
-            })"
-            @update-approach="(approachIndex, approach) => trainingStore.setApproach({
-              approach,
-              approachIndex,
-              exerciseIndex: i,
-            })"
+            @edit-click="() => onEditClick(exercise.id)"
           />
         </li>
       </TransitionGroup>
     </ul>
 
-    <p class="training__empty" v-else>Сегодня ещё не было занатий</p>
+    <p class="training__empty" v-else>Добавте упражнения</p>
 
     <template #footer>
       <div class="container">
-        <VButton
+        <VIconAction
+          class="training__add"
           v-if="trainingStore.selectedDayTraining"
-          :disabled="!trainingStore.canAddExercise"
-          variant="outline"
           size="m"
-          wide
-          @click="trainingStore.addExercise()"
-        >
-          <VIcon name="plus" />
-          Добавить упражнение
-        </VButton>
+          icon="plus"
+          @click="exerciseModal?.open()"
+        />
 
         <VButton
           v-else
           size="m"
           wide
-          @click="trainingStore.startTraining()"
+          @click="onStartClick"
         >
           Начать тренировку
         </VButton>
       </div>
     </template>
+
+    <ExerciseDetailModal ref="exerciseModal" />
   </ScreenLayout>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { VButton } from '@ui/VButton';
-import { VIcon } from '@ui/VIcon/';
 import { useRoute } from 'vue-router';
 import { TopBar } from '@/components/general/TopBar/';
 import { formatDate } from '@/helpers/formatDate';
-import { Exercise } from '@/components/training';
 import { useTrainingStore } from '@/stores/training';
-import ScreenLayout from '@/layouts/ScreenLayout/ScreenLayout.vue';
+import { ScreenLayout } from '@/layouts/ScreenLayout';
+import { VIconAction } from '@ui/VIconAction';
+import { ExerciseDetailModal } from '@/components/training/ExerciseDetailModal';
+import { ExerciseCart } from '@/components/general/ExerciseCart';
 
 const route = useRoute();
 const trainingStore = useTrainingStore();
+const exerciseModal = ref<InstanceType<typeof ExerciseDetailModal>>();
 
 trainingStore.setSelectedDate(
   route.query.date ? new Date(route.query.date as string) : new Date(),
@@ -86,8 +77,19 @@ if (route.query.date) {
   trainingStore.startTrainingByDate(new Date(route.query.date as string));
 }
 
-const onExerciseNameChange = (name: string, exerciseIndex: number) => {
-  trainingStore.setExerciseName(name, exerciseIndex);
+const onStartClick = () => {
+  trainingStore.startTraining();
+  exerciseModal.value?.open();
+};
+
+const onEditClick = (exerciseId: string) => {
+  const date = trainingStore.selectedDayTraining?.date;
+  if (!date) return;
+
+  exerciseModal.value?.open({
+    exerciseId,
+    date: new Date(date),
+  });
 };
 </script>
 

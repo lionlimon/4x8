@@ -17,4 +17,10 @@
     margin-top: 30px;
     color: rgb(var(--secondary-text));
   }
+
+  &__add {
+    position: fixed;
+    right: 18px;
+    bottom: 110px;
+  }
 }

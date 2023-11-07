@@ -1,39 +1,45 @@
 <template>
-  <div class="modal">
-    <Sheet no-stretch only-header-swipe v-model:visible="isOpen">
-      <div class="modal__header">
-        <div class="modal__header-info">
-          <h4 v-if="title" class="modal__title">
-            {{ title }}
-          </h4>
-          <p class="modal__sub-title" v-if="subTitle">{{ subTitle }}</p>
-        </div>
+  <Sheet
+    :class="['modal', modifiers]"
+    no-stretch
+    only-header-swipe
+    v-model:visible="isOpen"
+    @close="emit('on-close')"
+  >
+    <div class="modal__header">
+      <div class="modal__header-info">
+        <h4 v-if="title" class="modal__title">
+          {{ title }}
+        </h4>
+        <p class="modal__sub-title" v-if="subTitle">{{ subTitle }}</p>
+      </div>
 
-        <div v-if="$slots.actions" class="modal__actions">
-          <slot name="actions" />
-        </div>
+      <div v-if="$slots.actions" class="modal__actions">
+        <slot name="actions" />
       </div>
-      <div class="modal__inner">
-        <slot />
-      </div>
-    </Sheet>
-  </div>
+    </div>
+    <div class="modal__inner">
+      <slot />
+    </div>
+  </Sheet>
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeUnmount, watch } from 'vue';
+import {
+  ref, onBeforeUnmount, watch, computed,
+} from 'vue';
 import { Sheet } from 'bottom-sheet-vue3';
 import 'bottom-sheet-vue3/style.css';
 import { useScrollLock } from '@vueuse/core';
 
 type Emits = {
-  (e: 'onOpen'): void;
-  (e: 'onClose'): void;
+  (e: 'on-open'): void;
+  (e: 'on-close'): void;
 };
 
 const emit = defineEmits<Emits>();
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     default: null,
@@ -42,6 +48,11 @@ defineProps({
   subTitle: {
     type: String,
     default: null,
+  },
+
+  fullHeight: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -54,15 +65,19 @@ watch(isOpen, () => {
 
 const close = () => {
   isOpen.value = false;
-  emit('onClose');
+  emit('on-close');
 };
+
+const modifiers = computed(() => ({
+  'modal--full-height': props.fullHeight,
+}));
 
 onBeforeUnmount(() => close());
 
 defineExpose({
   open() {
     isOpen.value = true;
-    emit('onOpen');
+    emit('on-open');
   },
 
   close,

@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes">
+  <div class="counter">
     <button
       type="button"
       class="counter__decrement"
@@ -7,13 +7,15 @@
       :disabled="disabled">
       <VIcon width="14" height="14" name="minus" />
     </button>
-    <input
-      inputmode="numeric"
-      type="number"
-      @change="(e) => count = (e.target as HTMLInputElement)?.value as string ?? ''"
-      :value="count"
-      class="counter__value"
-    >
+    <label>
+      <input
+        inputmode="numeric"
+        type="number"
+        @change="(e) => count = (e.target as HTMLInputElement)?.value as string ?? ''"
+        :value="count"
+        class="counter__value"
+      >
+    </label>
     <button
       type="button"
       class="counter__increment"
@@ -25,33 +27,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType } from 'vue';
 import { useVModel } from '@vueuse/core';
 import { VIcon } from '@/components/ui/VIcon';
 
 type Emits = { (e: 'update:modelValue', value: number | string): void };
+type Props = {
+  modelValue: number | string,
+  disabled?: boolean,
+  min?: number,
+  max?: number | null,
+};
+
 const emit = defineEmits<Emits>();
 
-const props = defineProps({
-  modelValue: {
-    type: Number as PropType<number | string>,
-    default: 0,
-  },
-  theme: {
-    type: String as PropType<'gray' | 'violet'>,
-    default: 'gray',
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  min: {
-    type: Number,
-    default: 0,
-  },
-  max: {
-    type: Number,
-  },
+const props = withDefaults(defineProps<Props>(), {
+  disabled: false,
+  min: 0,
+  max: null,
 });
 
 const count = useVModel(props, 'modelValue', emit);
@@ -70,8 +62,6 @@ const decrement = () => {
     count.value = Number(count.value) - 1;
   }
 };
-
-const classes = computed(() => ['counter', { [`counter--theme-${props.theme}`]: !!props.theme }]);
 </script>
 
 <style scoped lang="scss" src="./VCounter.scss"></style>

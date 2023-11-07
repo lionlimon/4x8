@@ -29,7 +29,7 @@
     </VModal>
     <DeletionConfirmModal
       ref="deletionBottomSheet"
-      text="Удалить упражнение?"
+      text="Удалить тренировку?"
       @confirm="onConfirmDeletion"
     />
   </ScreenLayout>

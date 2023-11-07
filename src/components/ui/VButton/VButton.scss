@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: center;
   color: rgb(var(--theme-contrast-color));
+  border: 1px solid rgb(var(--theme-main-color));
   background-color: rgb(var(--theme-main-color));
   padding: 10px 15px;
   white-space: nowrap;
@@ -49,6 +50,7 @@
   &--size-m {
     padding: 15px 20px;
     min-height: 50px;
+    min-width: 50px;
     border-radius: 18px;
   }
 

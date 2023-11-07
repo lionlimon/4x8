@@ -127,60 +127,39 @@
       <h3>Инпуты</h3>
 
       <div class="section-item">
-        <VRange v-model="range" :max="1260" />
+        <VMiniInput v-model="input" />
       </div>
 
       <div class="section-item">
-        <VControl>
-          <VInput v-model="input" label="Имя матери" />
-        </VControl>
+        <VSwitch v-model="switcher">Переключатель</VSwitch>
       </div>
 
       <div class="section-item">
-        <VControl error="Не верно">
-          <VInput v-model="input" label="Имя матери" />
-        </VControl>
-        <br />
-      </div>
-
-      <div class="section-item">
-        <VControl text="Ты молодец">
-          <VInput v-model="input" label="Имя матери" />
-        </VControl>
-        <br />
-      </div>
-
-      <div class="section-item">
-        <VControl>
-          <VInput
-            v-model="input2"
-            digits
-            label="Введи 3 цифры CVV"
-            mask="###" />
-        </VControl>
-        <br />
+        <VSelect v-model="select" :options="options">Cписок</VSelect>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { VCard, VCardDelimiter } from '@ui/v-card/';
 import { ref } from 'vue';
 import { VModal } from '@ui/VModal/';
-import { VLabel } from '@ui/v-lable';
-import { VRange } from '@ui/v-range';
-import { VInput } from '@ui/v-input';
-import { VControl } from '@ui/v-control';
-import { VLink } from '@ui/v-link';
 import { VCounter } from '@/components/ui/VCounter';
 import { VIcon } from '@/components/ui/VIcon';
 import { VButton } from '@/components/ui/VButton';
+import { VMiniInput } from '@ui/VMiniInput';
+import { VSwitch } from '@ui/VSwitch';
+import VSelect from '@ui/VSelect/VSelect.vue';
 
 const bottomSheet = ref<{ open(): void }>();
-const range = ref(0);
 const input = ref('');
-const input2 = ref('');
+const select = ref('');
+const options = [
+  { title: 'Option 1', value: 'op-1' },
+  { title: 'Option 2', value: 'op-2' },
+  { title: 'Option 3', value: 'op-3' },
+];
+const switcher = ref(false);
 </script>
 
 <style lang="scss" scoped src="./ui.scss"></style>

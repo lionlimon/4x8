@@ -1,0 +1,29 @@
+.exercise-approach {
+  padding: 12px;
+  border: 1px solid rgb(var(--bright-contrast));
+  border-radius: 15px;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    color: rgb(var(--accent));
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  &__actions-title {
+    color: rgb(var(--secondary-text));
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  &__delete {
+    margin-right: -5px;
+  }
+}

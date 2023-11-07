@@ -1,0 +1,38 @@
+.exercise-cart {
+  border-radius: 10px;
+  background-color: rgb(var(--bg-contrast));
+  box-shadow: var(--base-shadow);
+  padding: 15px;
+  padding-top: 10px;
+
+  &__title {
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__edit {
+    color: rgb(var(--accent));
+    padding: 5px;
+    margin-right: -5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__approaches-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__approaches-list-item {
+    color: rgb(var(--secondary-text));
+  }
+
+  &__approach-reps {
+    color: rgb(var(--text));
+  }
+}

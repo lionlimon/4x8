@@ -4,10 +4,10 @@ import {
 } from 'vue';
 import { getObjectValue } from '@/helpers/getObjectValue';
 
-type Rules<F> = Partial<Record<keyof F, unknown>>;
 export const useValidation = <
-  F extends Record<string, unknown> | Ref<unknown>,
->(rules: Rules<F>, form: F) => {
+  R extends Record<string, unknown> | Ref<unknown>,
+  F extends Partial<Record<keyof R, unknown> | Ref<Record<keyof R, unknown>>>,
+>(rules: R, form: F) => {
   const formFields = Object.keys(form);
   const serverErrors = ref({} as ServerErrors);
 
@@ -32,7 +32,7 @@ export const useValidation = <
     },
   );
 
-  const touch = (key: keyof Rules<F>) => {
+  const touch = (key: keyof F) => {
     getObjectValue(validation.value, key as keyof Validation)?.$touch?.();
   };
 

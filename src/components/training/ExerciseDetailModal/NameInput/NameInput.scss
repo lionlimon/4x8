@@ -1,0 +1,13 @@
+.name-input {
+  &__input {
+    font-size: 18px;
+    font-weight: 500;
+    border: none;
+    width: 100%;
+    text-align: center;
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+}
