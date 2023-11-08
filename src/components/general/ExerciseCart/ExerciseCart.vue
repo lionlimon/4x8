@@ -12,21 +12,31 @@
       </button>
     </div>
 
-    <ul v-if="exercise.approaches" class="exercise-cart__approaches-list">
+    <ul v-if="exercise.approaches.length" class="exercise-cart__approaches-list">
       <li v-for="(approach, i) in exercise.approaches" :key="i" class="exercise-cart__approaches-list-item">
         {{ i + 1 }} подход
-        <span class="exercise-cart__approach-reps">
-          <strong>{{ approach.weight }}</strong> {{ weightUnits[approach.weightUnit] }} x <strong>{{approach.reps}}</strong> повторений
-        </span>
+        <div class="exercise-cart__approach-reps">
+          <VIcon v-if="exercise.isBasedOnBodyWeight" class="exercise-cart__body-icon" name="body" />
+          {{ exercise.isBasedOnBodyWeight ? '+' : null }}
+          {{ approach.weight }}
+          {{ weightUnits[approach.weightUnit] }}
+          <div>
+            по {{approach.reps}} повторений
+          </div>
+        </div>
       </li>
     </ul>
+
+    <p class="exercise-cart__empty empty-message" v-else>
+      Подходы пока не добавлены
+    </p>
   </li>
 </template>
 
 <script setup lang="ts">
 import { TrainingExerciseModel } from '@/stores/training';
 import { weightUnits } from '@/constants/weightUnits';
-import VIcon from '@ui/VIcon/VIcon.vue';
+import { VIcon } from '@ui/VIcon';
 
 type Emits = {
   (e: 'edit-click'): void

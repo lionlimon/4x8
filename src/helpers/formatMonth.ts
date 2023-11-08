@@ -1,6 +1,6 @@
 import { capitalize } from 'vue';
 
-export const formatMonth = (Date) => capitalize(
+export const formatMonth = (date: Date) => capitalize(
   new Intl.DateTimeFormat('ru', { month: 'long' })
-    .format(Date),
+    .format(date),
 );

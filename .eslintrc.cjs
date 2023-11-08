@@ -38,7 +38,7 @@ module.exports = {
     'vue/require-explicit-emits': 'off',
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'import/prefer-default-export': 'off',
-    'no-restricted-exports': ['error', { 'restrictDefaultExports': { 'direct': true } }]
+    'no-restricted-exports': ['error', { restrictDefaultExports: { direct: true } }],
   },
 
   overrides: [

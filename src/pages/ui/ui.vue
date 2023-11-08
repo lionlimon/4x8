@@ -54,12 +54,9 @@
       <h3>Cчётчики</h3>
 
       <div class="section-item">
-        <VCounter />
+        <VCounter v-model="counter" />
       </div>
 
-      <div class="section-item">
-        <VCounter theme="violet" />
-      </div>
     </div>
 
     <div class="section">
@@ -149,11 +146,12 @@ import { VIcon } from '@/components/ui/VIcon';
 import { VButton } from '@/components/ui/VButton';
 import { VMiniInput } from '@ui/VMiniInput';
 import { VSwitch } from '@ui/VSwitch';
-import VSelect from '@ui/VSelect/VSelect.vue';
+import { VSelect } from '@ui/VSelect';
 
 const bottomSheet = ref<{ open(): void }>();
 const input = ref('');
 const select = ref('');
+const counter = ref('0');
 const options = [
   { title: 'Option 1', value: 'op-1' },
   { title: 'Option 2', value: 'op-2' },

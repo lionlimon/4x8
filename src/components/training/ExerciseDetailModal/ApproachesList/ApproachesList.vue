@@ -11,9 +11,10 @@
           :key="approach.id"
         >
           <ExerciseApproach
+            :is-based-on-body-weight="isBasedOnBodyWeight"
             :index="i"
             v-model:approach="approaches[i]"
-            @delete-click="emit('delete-click')"
+            @delete-click="emit('delete-click', approach.id)"
           />
         </li>
       </TransitionGroup>
@@ -30,10 +31,11 @@ import { TrainingApproachModel } from '@/stores/training';
 
 type Emits = {
   (e: 'update:modelValue', approaches: TrainingApproachModel[]): void,
-  (e: 'delete-click'): void,
+  (e: 'delete-click', id: string): void,
 };
 type Props = {
   modelValue: TrainingApproachModel[],
+  isBasedOnBodyWeight: boolean,
 };
 
 const emit = defineEmits<Emits>();

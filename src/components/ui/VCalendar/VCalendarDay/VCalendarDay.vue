@@ -1,5 +1,5 @@
 <template>
-  <button :class="['calendar-day', modifiers]">
+  <button type="button" :class="['calendar-day', modifiers]">
     {{ day }}
     <span v-if="hasTraining" class="calendar-day__point" />
   </button>

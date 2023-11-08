@@ -20,13 +20,22 @@
         <VCounter v-model="approachForm.reps" />
       </div>
       <div class="exercise-approach__actions-group">
-        <div class="exercise-approach__actions-title">Вес ({{ weightUnits[approach.weightUnit] }})</div>
-        <VMiniInput
-          ref="input"
-          inputmode="numeric"
-          type="number"
-          v-model="approachForm.weight"
-        />
+        <div class="exercise-approach__actions-title">{{ weightLabel }}</div>
+        <div class="exercise-approach__weight-input">
+          <VIcon
+            class="exercise-approach__weight-input-icon"
+            v-if="isBasedOnBodyWeight"
+            name="body"
+            width="25"
+            height="24"
+          />
+          {{ isBasedOnBodyWeight ? '+' : null }}
+          <VMiniInput
+            inputmode="numeric"
+            type="number"
+            v-model="approachForm.weight"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -34,12 +43,12 @@
 
 <script setup lang="ts">
 import { VIcon } from '@ui/VIcon';
-import { ref } from 'vue';
+import { computed } from 'vue';
 import { VCounter } from '@ui/VCounter';
 import { VMiniInput } from '@ui/VMiniInput';
 import { TrainingApproachModel } from '@/stores/training';
 import { useVModel } from '@vueuse/core';
-import { weightUnits } from '../../../constants/weightUnits';
+import { weightUnits } from '@/constants/weightUnits';
 
 type Emits = {
   (e: 'delete-click', id: string): void,
@@ -50,12 +59,16 @@ const emit = defineEmits<Emits>();
 
 const props = defineProps<{
   approach: TrainingApproachModel,
-  index: number
+  index: number,
+  isBasedOnBodyWeight: boolean,
 }>();
 
 const approachForm = useVModel(props, 'approach', emit);
 
-const input = ref<InstanceType<typeof VMiniInput>>();
+const weightLabel = computed(() => {
+  const weightString = weightUnits[props.approach.weightUnit];
+  return `${props.isBasedOnBodyWeight ? 'Доп. вес' : 'Вес'} (${weightString})`;
+});
 </script>
 
 <style scoped lang="scss" src="./ExerciseApproach.scss"></style>

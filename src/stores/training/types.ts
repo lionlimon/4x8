@@ -10,6 +10,7 @@ export type TrainingApproachModel = {
 export type TrainingExerciseModel = {
   name: string,
   id: string,
+  isBasedOnBodyWeight: boolean,
   approaches: TrainingApproachModel[],
 };
 

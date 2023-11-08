@@ -5,7 +5,6 @@
   border-radius: var(--radius-main);
   border: 1px solid rgb(var(--black) / 10%);
 
-  &:focus,
   &:focus-visible {
     outline: none;
     border-color: rgb(var(--accent));

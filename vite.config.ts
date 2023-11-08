@@ -7,6 +7,7 @@ import dns from 'dns';
 
 dns.setDefaultResultOrder('verbatim');
 // https://vitejs.dev/config/
+// eslint-disable-next-line no-restricted-exports
 export default defineConfig((env) => {
   const baseUrl = env.mode === 'production' ? '/4x8' : '/';
 

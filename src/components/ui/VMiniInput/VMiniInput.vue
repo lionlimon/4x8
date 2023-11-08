@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core';
 
-type Emits = { (e: 'update:modelValue', value: string | number) };
+type Emits = { (e: 'update:modelValue', value: string | number): void };
 const emit = defineEmits<Emits>();
 
 const props = defineProps<{

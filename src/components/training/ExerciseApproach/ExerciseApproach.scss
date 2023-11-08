@@ -26,4 +26,14 @@
   &__delete {
     margin-right: -5px;
   }
+
+  &__weight-input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &__weight-input-icon {
+    color: rgb(var(--secondary-text));
+  }
 }

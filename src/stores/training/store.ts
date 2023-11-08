@@ -42,6 +42,7 @@ export const useTrainingStore = defineStore('training', () => {
   const exerciseInitial: Omit<TrainingExerciseModel, 'id'> = {
     name: '',
     approaches: [],
+    isBasedOnBodyWeight: false,
   };
 
   /**
@@ -129,14 +130,15 @@ export const useTrainingStore = defineStore('training', () => {
   const copyTraining = (date: Date) => {
     const training = getTrainingByDate(date);
     if (training) {
-      trainings.value[getKeyFromDateForRecord(new Date())] = undefined;
+      delete trainings.value[getKeyFromDateForRecord(new Date())];
 
       // Start today training
-      startTraining();
+      startTrainingByDate(new Date());
 
       // Copy training
-      training.exercises.forEach(({ name }, i) => {
+      training.exercises.forEach(({ name, isBasedOnBodyWeight }) => {
         addExercise({
+          isBasedOnBodyWeight,
           name,
           id: generateId(),
           approaches: [],
@@ -156,7 +158,7 @@ export const useTrainingStore = defineStore('training', () => {
     training.exercises = training.exercises.filter((exercise) => exercise.id !== exerciseId);
   };
 
-  const editExercise = (date: Date, exercise: TrainingExerciseModel) => {
+  const editExercise = (date: Date, exercise: Partial<TrainingExerciseModel> & { id: string }) => {
     if (!selectedDayTraining.value) { return; }
 
     const training = getTrainingByDate(date);
@@ -164,7 +166,7 @@ export const useTrainingStore = defineStore('training', () => {
 
     training.exercises = training.exercises.map((item) => {
       if (item.id === exercise.id) {
-        return exercise;
+        return { ...item, ...exercise };
       }
 
       return item;

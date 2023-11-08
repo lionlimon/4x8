@@ -16,6 +16,7 @@
 
       <ApproachesList
         v-model="form.approaches"
+        :is-based-on-body-weight="form.isBasedOnBodyWeight"
         @delete-click="onDeleteClick"
       />
 
@@ -36,7 +37,7 @@
 
 <script setup lang="ts">
 import { VModal } from '@ui/VModal';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useTrainingStore, TrainingExerciseModel } from '@/stores/training';
 import { ExerciseSettings } from '@/components/training/ExerciseTopBar/types';
 import { useTrainingSettingsStore } from '@/stores/training-settings';
@@ -60,6 +61,7 @@ const getInitialForm = () => ({
   name: '',
   approaches: [],
   id: new Date().toISOString(),
+  isBasedOnBodyWeight: false,
 });
 
 const form = ref<TrainingExerciseModel>(getInitialForm());
@@ -119,6 +121,16 @@ const onConfirmExerciseDeletion = () => {
   trainingStore.deleteExercise(currentExercise.value.date, currentExercise.value.exerciseId);
   bottomSheet.value?.close();
 };
+
+watch(() => settings.value.weightUnit, (weightUnit) => {
+  form.value.approaches.forEach((approach) => {
+    approach.weightUnit = weightUnit;
+  });
+});
+
+watch(() => settings.value.bodyWeight, (isBasedOnBodyWeight) => {
+  form.value.isBasedOnBodyWeight = isBasedOnBodyWeight;
+});
 
 defineExpose({
   open: (payload?: { exerciseId: string, date: Date }) => {
