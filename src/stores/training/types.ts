@@ -3,7 +3,6 @@ import { WeightUnit } from '@/constants/weightUnits';
 export type TrainingApproachModel = {
   reps: number,
   weight: number,
-  weightUnit: WeightUnit,
   id: string
 };
 
@@ -11,6 +10,7 @@ export type TrainingExerciseModel = {
   name: string,
   id: string,
   isBasedOnBodyWeight: boolean,
+  weightUnit: WeightUnit,
   approaches: TrainingApproachModel[],
 };
 

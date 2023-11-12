@@ -14,13 +14,11 @@ const routes = [
   },
 ];
 
-if (import.meta.env.DEV) {
-  routes.push({
-    path: '/ui',
-    name: 'ui',
-    component: async () => (await import('@/pages/ui')).Ui,
-  });
-}
+routes.push({
+  path: '/ui',
+  name: 'ui',
+  component: async () => (await import('@/pages/ui')).Ui,
+});
 
 export const router = createRouter({
   history: createWebHashHistory(import.meta.env.MODE === 'development' ? '' : '4x8'),

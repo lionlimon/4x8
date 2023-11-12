@@ -19,7 +19,7 @@
           <VIcon v-if="exercise.isBasedOnBodyWeight" class="exercise-cart__body-icon" name="body" />
           {{ exercise.isBasedOnBodyWeight ? '+' : null }}
           {{ approach.weight }}
-          {{ weightUnits[approach.weightUnit] }}
+          {{ weightUnits[exercise.weightUnit] }}
           <div>
             по {{approach.reps}} повторений
           </div>
@@ -52,4 +52,4 @@ const emit = defineEmits<Emits>();
 defineProps<Props>();
 </script>
 
-<style scoped lang="scss" src="./ExerciseCart.scss"></style>
+<style scoped lang="scss" src="./ExerciseCard.scss"></style>

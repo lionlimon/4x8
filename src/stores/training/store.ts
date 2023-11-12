@@ -35,7 +35,6 @@ export const useTrainingStore = defineStore('training', () => {
   const approachInitial: TrainingApproachModel = {
     reps: 0,
     weight: 0,
-    weightUnit: trainingSettingsStore.settings.weightUnit,
     id: new Date().toISOString(),
   };
 
@@ -43,11 +42,9 @@ export const useTrainingStore = defineStore('training', () => {
     name: '',
     approaches: [],
     isBasedOnBodyWeight: false,
+    weightUnit: trainingSettingsStore.settings.weightUnit,
   };
 
-  /**
-   * Approach actions
-   */
   const addApproach = (exerciseIndex: number) => {
     if (!selectedDayTraining.value) { return; }
 
@@ -88,9 +85,6 @@ export const useTrainingStore = defineStore('training', () => {
     currentExercise.approaches.splice(approachIndex, 1);
   };
 
-  /**
-   * Training actions
-   */
   const initiateTraining = (trainingDate = new Date()) => {
     const date = trainingDate.toISOString();
 
@@ -136,11 +130,12 @@ export const useTrainingStore = defineStore('training', () => {
       startTrainingByDate(new Date());
 
       // Copy training
-      training.exercises.forEach(({ name, isBasedOnBodyWeight }) => {
+      training.exercises.forEach(({ name, isBasedOnBodyWeight, weightUnit }, i) => {
         addExercise({
           isBasedOnBodyWeight,
+          weightUnit,
           name,
-          id: generateId(),
+          id: generateId() + String(i),
           approaches: [],
         });
       });
@@ -185,6 +180,13 @@ export const useTrainingStore = defineStore('training', () => {
     return true;
   });
 
+  const pastTraining = computed(() => {
+    const pastTrainingId = selectedDayTraining.value?.basedOnTraining;
+    if (!pastTrainingId) return;
+
+    return getTrainingByDate(new Date(pastTrainingId));
+  });
+
   return {
     startTraining,
     trainings,
@@ -202,5 +204,6 @@ export const useTrainingStore = defineStore('training', () => {
     trainingSettingsStore,
     editExercise,
     deleteExercise,
+    pastTraining,
   };
 });

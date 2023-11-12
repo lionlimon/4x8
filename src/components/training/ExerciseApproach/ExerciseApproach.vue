@@ -48,7 +48,7 @@ import { VCounter } from '@ui/VCounter';
 import { VMiniInput } from '@ui/VMiniInput';
 import { TrainingApproachModel } from '@/stores/training';
 import { useVModel } from '@vueuse/core';
-import { weightUnits } from '@/constants/weightUnits';
+import { weightUnits, WeightUnit } from '@/constants/weightUnits';
 
 type Emits = {
   (e: 'delete-click', id: string): void,
@@ -61,12 +61,13 @@ const props = defineProps<{
   approach: TrainingApproachModel,
   index: number,
   isBasedOnBodyWeight: boolean,
+  weightUnit: WeightUnit,
 }>();
 
 const approachForm = useVModel(props, 'approach', emit);
 
 const weightLabel = computed(() => {
-  const weightString = weightUnits[props.approach.weightUnit];
+  const weightString = weightUnits[props.weightUnit];
   return `${props.isBasedOnBodyWeight ? 'Доп. вес' : 'Вес'} (${weightString})`;
 });
 </script>

@@ -10,7 +10,7 @@
           v-for="(exercise, i) in trainingStore.selectedDayTraining.exercises"
           :key="i"
         >
-          <ExerciseCart
+          <ExerciseCard
             can-edit
             :exercise="exercise"
             @edit-click="() => onEditClick(exercise.id)"
@@ -56,7 +56,7 @@ import { useTrainingStore } from '@/stores/training';
 import { ScreenLayout } from '@/layouts/ScreenLayout';
 import { VIconAction } from '@ui/VIconAction';
 import { ExerciseDetailModal } from '@/components/training/ExerciseDetailModal';
-import { ExerciseCart } from '@/components/general/ExerciseCart';
+import { ExerciseCard } from '@/components/general/ExerciseCard';
 
 const route = useRoute();
 const trainingStore = useTrainingStore();

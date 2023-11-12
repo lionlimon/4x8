@@ -37,7 +37,7 @@ import { VButton } from '@ui/VButton';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTrainingStore } from '@/stores/training';
-import ExerciseCart from '@/components/general/ExerciseCart/ExerciseCart.vue';
+import ExerciseCart from '@/components/general/ExerciseCard/ExerciseCard.vue';
 
 const props = defineProps<{
   date: Date

@@ -12,6 +12,7 @@
         >
           <ExerciseApproach
             :is-based-on-body-weight="isBasedOnBodyWeight"
+            :weight-unit="weightUnit"
             :index="i"
             v-model:approach="approaches[i]"
             @delete-click="emit('delete-click', approach.id)"
@@ -28,6 +29,7 @@
 import { ExerciseApproach } from '@/components/training';
 import { useVModel } from '@vueuse/core';
 import { TrainingApproachModel } from '@/stores/training';
+import { WeightUnit } from '@/constants/weightUnits';
 
 type Emits = {
   (e: 'update:modelValue', approaches: TrainingApproachModel[]): void,
@@ -36,6 +38,7 @@ type Emits = {
 type Props = {
   modelValue: TrainingApproachModel[],
   isBasedOnBodyWeight: boolean,
+  weightUnit: WeightUnit,
 };
 
 const emit = defineEmits<Emits>();
